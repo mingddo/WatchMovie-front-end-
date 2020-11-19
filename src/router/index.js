@@ -1,6 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Signup from '../views/accounts/Signup.vue'
+import Login from '../views/accounts/Login.vue'
+import ReviewList from '../views/community/ReviewList.vue'
+import ReviewDetail from '../views/community/ReviewDetail.vue'
+import ReviewForm from '../views/community/ReviewForm.vue'
+import MovieList from '../views/Movie/MovieList.vue'
+import Recommend from '../views/Recommendation/Recommend.vue'
 
 Vue.use(VueRouter)
 
@@ -11,13 +18,42 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/signup',
+    name: 'Signup',
+    component: Signup
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/reviewlist',
+    name: 'ReviewList',
+    component: ReviewList
+  },
+  {
+    path: '/reviewdetail/',
+    name: 'ReviewDetail',
+    component: ReviewDetail,
+    props: true
+  },
+  {
+    path: '/reviewform',
+    name: 'ReviewForm',
+    component: ReviewForm
+  },
+  
+  {
+    path: '/movielist',
+    name: 'MovieList',
+    component: MovieList
+  },
+  {
+    path: '/recommend',
+    name: 'Recommend',
+    component: Recommend
+  },
 ]
 
 const router = new VueRouter({
