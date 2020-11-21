@@ -109,7 +109,7 @@ font-family: sans-serif;
   background: none;
   color: white;
   font-size: 18px;
-  width: 80px;
+  width: 200px;
   float: left;
   margin: 10px;
 }

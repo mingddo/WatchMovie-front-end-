@@ -20,7 +20,6 @@ methods: {
 },
 computed: {
   makeIdx(){
-    console.log(this.review)
     return this.idx + 1
   },
 }

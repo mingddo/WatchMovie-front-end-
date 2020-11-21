@@ -12,30 +12,34 @@
           </tr>
         </thead>
         <tbody>
+          
           <ReviewItem v-for="(review,idx) in reviews" :key="idx"
           :idx="idx" :review="review"/> 
         </tbody>
       </table>
     </div>
+    <ReviewForm @addReview="createReview" class="unvisibility" />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import ReviewItem from './ReviewItem.vue'
+import ReviewForm from './ReviewForm.vue'
 export default {
   components: { 
-    ReviewItem },
+    ReviewItem,
+    ReviewForm },
   data(){
     return {
       reviews: [],
-
-      // reviews : [{id: 1, title:'첫 번째 리뷰', content:'내용', rank:'3', created_at:'11-19'},
-      // {id: 2, title:'두 번째 리뷰', content:'내용', rank:'2', created_at:'11-12'}
-      // ],
     }
   },
   methods: {
+    createReview(review){
+    this.reviews.push(review)
+    console.log('푸시 잘된다.')
+  },
     getReviews() {
       axios({
       url:'http://127.0.0.1:8000/community/',
@@ -50,8 +54,9 @@ export default {
       console.error(err)
     })
   },
+  
 },
-  created() {
+  mounted() {
     this.getReviews()
   }
 }
@@ -61,5 +66,7 @@ export default {
   tr {
     border-bottom: 1px solid;
   }
-
+.unvisibility{
+  display: none;
+}
 </style>

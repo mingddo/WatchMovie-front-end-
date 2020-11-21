@@ -12,7 +12,7 @@
 import axios from 'axios'
 export default {
   props: {
-    review_id: String,
+    review_id: [Number, String]
   },
   data() {
     return {
@@ -33,9 +33,11 @@ export default {
       },
       }).then((res)=>{
         console.log(res.data)
+        this.$emit('addComment', res.data)
       }).catch((err)=>{
         console.error(err)
       })
+      this.comment = ''
     },
   }
 

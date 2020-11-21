@@ -46,10 +46,12 @@ methods: {
       },
     }).then((res)=>{
       console.log(res.data)
+      this.$emit('addReview', res.data)
+      this.$router.push({name: 'ReviewList' })
     }).catch((err)=>{
       console.error(err)
     })
-    this.$router.push({name: 'ReviewList' })
+    
   }
 },
 
