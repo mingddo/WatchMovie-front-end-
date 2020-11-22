@@ -38,7 +38,7 @@ export default {
   methods: {
     createReview(review){
     this.reviews.push(review)
-    console.log('푸시 잘된다.')
+    // console.log('푸시 잘된다.')
   },
     getReviews() {
       axios({
@@ -48,7 +48,7 @@ export default {
         Authorization: `JWT ${localStorage.getItem('jwt')}`
       },
     }).then((res)=>{
-      console.log(res.data)
+      // console.log(res.data)
       this.reviews = res.data
     }).catch((err)=>{
       console.error(err)

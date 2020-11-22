@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit="addReview">
+    <form class="review-form" @submit="addReview">
       <label for="title">제목 : </label>
       <input type="text" id="title" size="98" v-model.trim="title"> <br>
       <label for="content">내용 : </label>
@@ -59,5 +59,19 @@ methods: {
 </script>
 
 <style>
+.review-form{
+  width: 80%;
+  height: auto;
 
+}
+textarea {
+  /* width: 100%; */
+  height: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  border: solid 2px #1E90FF;
+  border-radius: 5px;
+  font-size: 16px;
+  resize: both;
+}
 </style>

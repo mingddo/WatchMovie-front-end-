@@ -36,7 +36,7 @@ const routes = [
     path: '/reviewdetail/',
     name: 'ReviewDetail',
     component: ReviewDetail,
-    props: true
+    // props: true
   },
   {
     path: '/reviewform',
