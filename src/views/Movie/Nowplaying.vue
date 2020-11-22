@@ -1,6 +1,6 @@
 <template>
 
-  <carousel class="slide-frame" :per-page="5" :navigate-to="someLocalProperty" :mouse-drag="false">
+  <carousel class="slide-frame" :per-page="10" :navigate-to="someLocalProperty" :mouse-drag="false">
     <slide v-for="now_playing_movie in now_playing_movies" :key="now_playing_movie.id">
        <NowItem :now_playing_movie="now_playing_movie"/>
     </slide>

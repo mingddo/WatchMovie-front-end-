@@ -3,10 +3,12 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Signup from '../views/accounts/Signup.vue'
 import Login from '../views/accounts/Login.vue'
+import Profile from '../views/accounts/Profile.vue'
 import ReviewList from '../views/community/ReviewList.vue'
 import ReviewDetail from '../views/community/ReviewDetail.vue'
 import ReviewForm from '../views/community/ReviewForm.vue'
 import MovieList from '../views/Movie/MovieList.vue'
+import SearchList from '../views/Movie/SearchList.vue'
 import Recommend from '../views/Recommendation/Recommend.vue'
 
 Vue.use(VueRouter)
@@ -26,6 +28,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
   },
   {
     path: '/reviewlist',
@@ -48,6 +55,11 @@ const routes = [
     path: '/movielist',
     name: 'MovieList',
     component: MovieList
+  },
+  {
+    path: '/searchlist',
+    name: 'SearchList',
+    component: SearchList
   },
   {
     path: '/recommend',

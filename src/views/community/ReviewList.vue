@@ -8,6 +8,7 @@
             <th scope="col">#</th>
             <th scope="col">title</th>
             <th scope="col">rank</th>
+            <th scope="col">user</th>
             <th scope="col">created_at</th>
           </tr>
         </thead>

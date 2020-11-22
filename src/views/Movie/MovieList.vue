@@ -61,7 +61,7 @@ export default {
         Authorization: `JWT ${localStorage.getItem('jwt')}`
       },
     }).then((res)=>{
-      // console.log(res.data)
+      console.log(res.data)
       this.now_playing_movies = res.data
     }).catch((err)=>{
       console.error(err)
@@ -75,28 +75,28 @@ export default {
         Authorization: `JWT ${localStorage.getItem('jwt')}`
       },
     }).then((res)=>{
-      // console.log(res.data)
+      console.log(res.data)
       this.popular_movies = res.data
     }).catch((err)=>{
       console.error(err)
     })
   },
   get_upcomming_movies_list() {
-        axios({
+    axios({
     url:'http://127.0.0.1:8000/movies/upcoming/',
     method: 'GET',
     headers: {
       Authorization: `JWT ${localStorage.getItem('jwt')}`
     },
     }).then((res)=>{
-      // console.log(res.data)
+      console.log(res.data)
       this.upcomming_movies = res.data
     }).catch((err)=>{
       console.error(err)
     })
     },
   },
-  mounted() {
+  created() {
     this.get_nowplaying_list()
     this.get_popularmovies_list()
     this.get_upcomming_movies_list()

@@ -3,6 +3,7 @@
     <td>{{ makeIdx }}</td>
     <td @click="OnClick">{{ review.title }}</td>
     <td>{{review.rank}}</td>
+    <td>{{review.user}}</td>
     <td>{{review.created_at}}</td>
   </tr>
 </template>

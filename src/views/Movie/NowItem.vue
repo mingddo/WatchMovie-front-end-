@@ -29,11 +29,11 @@ export default {
 
 <style>
 .screen {
-  width: 300px;
+  width: 150px;
   height: auto;
 }
 .poster-img{
   width: 100%;
-  height: 100%;
+  height: auto%;
 }
 </style>
