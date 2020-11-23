@@ -2,8 +2,7 @@
   <div class="movie-list">
     <div class="jumbotron jumbotron-fluid inner">
       <div class="container">
-        <h1 class="display-4">영화 추천 할 곳</h1>
-        <p class="lead">추천영화가 여기에 보여집니다.</p>
+        <Recommend :recommendMovieData="recommendMovieData" :user="user"/>
       </div>
     </div>
 
@@ -49,16 +48,19 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import axios from "axios";
 import Nowplaying from "./Nowplaying.vue";
 import Upcoming from "./Upcoming.vue";
 import Popular from "./Popular.vue";
 import VueJwtDecode from "vue-jwt-decode";
+import Recommend from '../Recommendation/Recommend.vue';
 export default {
   components: {
     Nowplaying,
     Upcoming,
     Popular,
+    Recommend,
   },
   data() {
     return {
@@ -73,10 +75,41 @@ export default {
       upcomming_movies: [],
       selected_movie: {},
       modal_toggle: true,
-      user: ''
+      user: '',
+      userWishes: [],
+      recommendMovie: 0,
+      recommendMovieData: {},
     };
   },
   methods: {
+    getWish () {
+      axios ({
+        url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/`,
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      }).then((res) => {
+        // console.log(res.data)
+        this.userWishes = res.data
+        const randomIndex = _.random(this.userWishes.length - 1)
+        // console.log("보여주세요!", randomIndex)
+        this.recommendMovie = this.userWishes[randomIndex].num
+        // console.log("보여주세여!", this.recommendMovie.num)
+      }).then(() => {
+        axios ({
+        url: `http://127.0.0.1:8000/movies/recommend/${this.recommendMovie}/`,
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      }).then((res) => {
+        // console.log('보여쥬ㅓ!!',res)
+        this.recommendMovieData = res.data
+        // console.log('추천영화', this.recommendMovieData)
+      })
+      })
+    },
     addWishMovie(){
       axios({
         url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/`,
@@ -162,6 +195,7 @@ export default {
     this.get_nowplaying_list();
     this.get_popularmovies_list();
     this.get_upcomming_movies_list();
+    this.getWish();
   },
 };
 </script>
