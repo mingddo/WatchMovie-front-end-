@@ -92,9 +92,13 @@ export default {
       }).then((res) => {
         // console.log(res.data)
         this.userWishes = res.data
+        if (this.userWishes.length) {
         const randomIndex = _.random(this.userWishes.length - 1)
         // console.log("보여주세요!", randomIndex)
         this.recommendMovie = this.userWishes[randomIndex].num
+        } else {
+          this.recommendMovie = '2021'
+        }
         // console.log("보여주세여!", this.recommendMovie.num)
       }).then(() => {
         axios ({

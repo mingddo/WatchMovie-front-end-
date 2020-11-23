@@ -19,16 +19,17 @@
           </svg>
         </span>
         <div class="container">
-          <div class="input-group w-60">
+          <div class="input-group w-60" v-show="canIseen">
             <input
               type="text"
-              class="form-control"
+              class="form-control"       
               aria-label="Dollar amount (with dot and two decimal places)"
+              placeholder="영화명 검색"
               v-model.trim="inputMovie"
               @keypress.enter="OnClick"
             />
             <div class="input-group-append" @click="OnClick">
-              <span class="input-group-text">
+              <button class="input-group-text">
                 <svg
                   width="1em"
                   height="1em"
@@ -46,9 +47,31 @@
                     d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
                   />
                 </svg>
-              </span>
+              </button>
             </div>
           </div>
+            <div v-show="canIseen === false" class="input-group-append" @click="CanSee" >
+              <button class="input-group-text">
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  class="bi bi-search"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            
         </div>
         <span>{{ user.username }} 님 안녕하세요</span>
         <router-link to="/">Home</router-link> |
@@ -78,9 +101,14 @@ export default {
       login: false,
       inputMovie: '',
       searchMovie: [],
+      canIseen: false,
     };
   },
   methods: {
+    CanSee () {
+      this.canIseen = true
+      console.log("이제 보여", this.canIseen)
+    },
     OnClick() {
       const keyword = this.inputMovie
       axios.get(`http://127.0.0.1:8000/movies/search/${keyword}/`, )
@@ -89,14 +117,15 @@ export default {
 
         this.searchMovie = res.data
         console.log(this.searchMovie)
-        this.$router.push({ name: "SearchList", query: { ...this.searchMovie } });
-
+        this.$router.push({ name: "SearchList", query: { searchMovie: this.searchMovie, inputMovie : this.inputMovie }, });
+        this.canIseen = false
+        console.log("이제 안보여", this.canIseen)
       })
       .catch((err) => {
         console.log(err)
       })
 
-      this.inputMovie=''
+      // this.inputMovie=''
       },
     gotoProfile() {
       this.$router.push({ name: "Profile", query:{ userId: this.user.user_id}});
@@ -128,6 +157,12 @@ export default {
   width: 50px;
   height: auto;
 }
+
+#seen {
+  display: block;
+  transition-delay: 0.5s
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -147,5 +182,6 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+
 }
 </style>
