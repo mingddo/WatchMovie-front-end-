@@ -16,6 +16,7 @@
     "vue-jwt-decode": "^0.1.0",
     "vue-router": "^3.2.0",
     "vue-slick-carousel": "^1.0.6",
+    "vue-star-rating": "^2.1.0",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
