@@ -1,8 +1,15 @@
 <template>
   <div>
-    <form @submit="addComment">
-      <label for="comment">댓글: </label>
-      <input type="text" name="" id="comment" v-model="comment">
+    <form class="comment-form" @submit="addComment">
+      <label for="comment">댓글</label>
+        <input
+          type="text"
+          id="comment"
+          class="form-control w-100 comment-place"
+          v-model.trim="comment"
+          aria-describedby="passwordHelpBlock"
+        />
+
       <button>+</button>
     </form>
   </div>
@@ -45,5 +52,14 @@ export default {
 </script>
 
 <style>
+.comment-form{
+  width: 60%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
 
+}
+.comment-place{
+  margin: auto;
+}
 </style>
