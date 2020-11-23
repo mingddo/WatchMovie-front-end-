@@ -1,6 +1,6 @@
 <template>
 
-  <carousel class="slide-frame" :per-page="5" :navigate-to="someLocalProperty" :mouse-drag="false">
+  <carousel class="slide-frame" :per-page="5" :mouse-drag="false">
     <slide v-for="popular_movie in popular_movies" :key="popular_movie.id">
        <PopularItem :popular_movie="popular_movie"/>
     </slide>

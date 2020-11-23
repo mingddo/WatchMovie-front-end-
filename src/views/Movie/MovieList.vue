@@ -6,112 +6,193 @@
         <p class="lead">추천영화가 여기에 보여집니다.</p>
       </div>
     </div>
-    <div >
+
+
+    <div>
       <h1>Now Playing</h1>
       <div class="inner">
-        <Nowplaying :now_playing_movies="now_playing_movies"/>
+        <Nowplaying :now_playing_movies="now_playing_movies" @selectedmovie="selectedmovie" />
       </div>
     </div>
 
     <div>
-      <!-- <div class="movie-list"> -->
+      <div class="movie-list">
       <h1>Popular</h1>
       <div class="inner">
-      <Popular :popular_movies="popular_movies"/>
+        <Popular :popular_movies="popular_movies" />
       </div>
     </div>
-    <!-- </div> -->
+    </div>
 
     <div>
-      <!-- <div class="movie-list"> -->
+      <div class="movie-list">
       <h1>Upcoming</h1>
       <div class="inner">
-      <Upcoming :upcomming_movies="upcomming_movies"/>
+        <Upcoming :upcomming_movies="upcomming_movies" />
+      </div>
     </div>
     </div>
-    <!-- </div> -->
-  </div>
+    <!-- modal -->
+    <!-- Button trigger modal -->
+     <div :class="{modal_display:modal_toggle}" style="width: 18rem;" >
+      <img :src="selected_movie.poster_path" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{selected_movie.title}}</h5>
+        <p class="card-text">평점 : {{selected_movie.vote_average}}</p>
+        <input @click="addWishMovie" type="button" value="wish_movie">
+        <input type="button" value="back" @click="modalToggle">
+      </div>
+    </div>
+      </div>
+  
+
 </template>
 
 <script>
-import axios from 'axios'
-import Nowplaying from './Nowplaying.vue'
-import Upcoming from './Upcoming.vue'
-import Popular from './Popular.vue'
-
+import axios from "axios";
+import Nowplaying from "./Nowplaying.vue";
+import Upcoming from "./Upcoming.vue";
+import Popular from "./Popular.vue";
+import VueJwtDecode from "vue-jwt-decode";
 export default {
-  components: { 
+  components: {
     Nowplaying,
     Upcoming,
     Popular,
   },
   data() {
     return {
-      now_playing_movies : [],
-      popular_movies : [],
-      upcomming_movies : [],
-    }
+
+      data: [
+        '<div class="example-slide">Slide 1</div>',
+        '<div class="example-slide">Slide 2</div>',
+        '<div class="example-slide">Slide 3</div>',
+      ],
+      now_playing_movies: [],
+      popular_movies: [],
+      upcomming_movies: [],
+      selected_movie: {},
+      modal_toggle: true,
+      user: ''
+    };
   },
   methods: {
-    get_nowplaying_list(){
+    addWishMovie(){
       axios({
-      url:'http://127.0.0.1:8000/movies/nowplaying/',
-      method: 'GET',
-      headers: {
-        Authorization: `JWT ${localStorage.getItem('jwt')}`
-      },
-    }).then((res)=>{
-      console.log(res.data)
-      this.now_playing_movies = res.data
-    }).catch((err)=>{
-      console.error(err)
-    })
-  },
-  get_popularmovies_list() {
-          axios({
-      url:'http://127.0.0.1:8000/movies/popular/',
-      method: 'GET',
-      headers: {
-        Authorization: `JWT ${localStorage.getItem('jwt')}`
-      },
-    }).then((res)=>{
-      console.log(res.data)
-      this.popular_movies = res.data
-    }).catch((err)=>{
-      console.error(err)
-    })
-  },
-  get_upcomming_movies_list() {
-    axios({
-    url:'http://127.0.0.1:8000/movies/upcoming/',
-    method: 'GET',
-    headers: {
-      Authorization: `JWT ${localStorage.getItem('jwt')}`
+        url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/`,
+        method: "POST",
+        data:{
+          title: this.selected_movie.title,
+          num: this.selected_movie.id
+        },
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      }).then((res)=>{
+        console.log(res.data)
+      }).catch((err)=>{
+        console.error(err)
+      })
     },
-    }).then((res)=>{
-      console.log(res.data)
-      this.upcomming_movies = res.data
-    }).catch((err)=>{
-      console.error(err)
-    })
+    getUserName() {
+    // console.log(VueJwtDecode.decode(localStorage.getItem('jwt')))
+    this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
+    console.log(this.user)
+    },
+    modalToggle(){
+      this.modal_toggle = true
+    },
+    selectedmovie(selectMovie) {
+      this.selected_movie = selectMovie;
+      this.modal_toggle = false;
+      console.log(this.user)
+      console.log("MovieList", this.selected_movie);
+    },
+    get_nowplaying_list() {
+      axios({
+        url: "http://127.0.0.1:8000/movies/nowplaying/",
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          this.now_playing_movies = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    get_popularmovies_list() {
+      axios({
+        url: "http://127.0.0.1:8000/movies/popular/",
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          this.popular_movies = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    get_upcomming_movies_list() {
+      axios({
+        url: "http://127.0.0.1:8000/movies/upcoming/",
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          this.upcomming_movies = res.data;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
   created() {
-    this.get_nowplaying_list()
-    this.get_popularmovies_list()
-    this.get_upcomming_movies_list()
+    this.getUserName()
+    this.get_nowplaying_list();
+    this.get_popularmovies_list();
+    this.get_upcomming_movies_list();
   },
-}
+};
 </script>
 
 <style>
-.movie-list{
+.modal_display {
+  display: none;
+}
+.movie-list {
   padding: 30px 40px;
   text-align: center;
 }
-.movie-list .inner{
+.movie-list .inner {
   max-width: 1500px;
-    margin: 0 auto;
+  margin: 0 auto;
+}
+.main-home section {
+  margin: 40px 60px;
 }
 
+.fcknflexbox {
+  display: flex;
+  justify-content: space-around;
+}
+
+.fcknflexbox div > * {
+  margin: 10px;
+}
+
+.home-boxoffice > h2,
+.home-stockoffice > h2 {
+  margin-left: 40px;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-  <carousel class="slide-frame" :per-page="5" :navigate-to="someLocalProperty" :mouse-drag="false">
+  <carousel class="slide-frame" :per-page="5" :mouse-drag="false">
     <slide v-for="upcomming_movie in upcomming_movies" :key="upcomming_movie.id">
        <UpcomingItem :upcomming_movie="upcomming_movie"/>
     </slide>

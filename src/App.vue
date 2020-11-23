@@ -63,7 +63,7 @@
         <router-link to="/login">Login</router-link>
       </div>
     </div>
-    <router-view @login="setLogin" />
+    <router-view @login="setLogin" :user="user"/>
   </div>
 </template>
 

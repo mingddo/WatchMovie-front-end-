@@ -1,6 +1,6 @@
 <template>
   <span>
-    <div class="screen">
+    <div class="screen" @click="Onclick">
       <img class="poster-img" :src="PosterURL" alt="">
     </div>
     <div>
@@ -17,6 +17,11 @@ export default {
   },
   props: {
     now_playing_movie: Object,
+  },
+  methods: {
+    Onclick() {
+      this.$emit('selectedmovie', this.now_playing_movie)
+    },
   },
   computed: {
     PosterURL() {
