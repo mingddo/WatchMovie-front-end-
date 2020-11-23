@@ -24,11 +24,12 @@
               type="text"
               class="form-control"
               aria-label="Dollar amount (with dot and two decimal places)"
+              v-model.trim="inputMovie"
+              @keypress.enter="OnClick"
             />
-            <div class="input-group-append">
+            <div class="input-group-append" @click="OnClick">
               <span class="input-group-text">
                 <svg
-                  @click="OnClick"
                   width="1em"
                   height="1em"
                   viewBox="0 0 16 16"
@@ -69,17 +70,34 @@
 
 <script>
 import VueJwtDecode from "vue-jwt-decode";
+import axios from 'axios'
 export default {
   data() {
     return {
       user: "",
       login: false,
+      inputMovie: '',
+      searchMovie: [],
     };
   },
   methods: {
     OnClick() {
-      this.$router.push({ name: "ReviewDetail", query: { ...this.review } });
-    },
+      const keyword = this.inputMovie
+      axios.get(`http://127.0.0.1:8000/movies/search/${keyword}/`, )
+      .then((res) => {
+        console.log(res.data)
+
+        this.searchMovie = res.data
+        console.log(this.searchMovie)
+        this.$router.push({ name: "SearchList", query: { ...this.searchMovie } });
+
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+      this.inputMovie=''
+      },
     gotoProfile() {
       this.$router.push({ name: "Profile" });
     },
