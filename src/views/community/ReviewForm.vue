@@ -1,6 +1,8 @@
 <template>
   <div class="review-place">
     <form class="review-form" @submit="addReview">
+      <label for="movietitle">영화제목</label>
+      <input type="text" id="movietitle" class="form-control w-100" v-model.trim="movietitle" aria-describedby="passwordHelpBlock">
       <label for="title">제목</label>
       <input type="text" id="title" class="form-control w-100" v-model.trim="title" aria-describedby="passwordHelpBlock">
       <label for="content">내용 : </label>
@@ -28,6 +30,7 @@ import axios from 'axios'
 export default {
 data() {
   return {
+    movietitle : '',
     title : '',
     content: '',
     rank: '',
@@ -40,6 +43,7 @@ methods: {
       url:'http://127.0.0.1:8000/community/',
       method: 'POST',
       data: {
+        movie_title: this.movietitle,
         title: this.title,
         content: this.content,
         rank: this.rank
