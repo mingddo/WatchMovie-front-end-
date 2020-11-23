@@ -99,7 +99,7 @@ export default {
       this.inputMovie=''
       },
     gotoProfile() {
-      this.$router.push({ name: "Profile" });
+      this.$router.push({ name: "Profile", query:{ userId: this.user.user_id}});
     },
     getUserName() {
       // console.log(VueJwtDecode.decode(localStorage.getItem('jwt')))
