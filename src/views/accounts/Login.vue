@@ -39,7 +39,7 @@ export default {
       credentials: {
         username: '',
         password: '',
-        space: '',
+        id: '',
       }
     }
   },
@@ -49,10 +49,23 @@ export default {
         .then((res) => {
           // console.log(res)
           localStorage.setItem('jwt', res.data.token)
-          this.$emit('login')
+          
+          console.log(this.credentials)
           this.$forceUpdate()
-          // console.log('누구냐면..', this.credentials.username)
-          this.$router.push({ name: 'Home', query: { username: this.credentials.username}})
+          this.$router.push({ name: 'Home'})
+          axios.get('http://127.0.0.1:8000/accounts/userlist/')
+          .then((res) => {
+            // console.log('회원목록', res.data)
+            for (const user of res.data) {
+              for (const key in user) {
+                if (key == "username" && this.credentials.username == user[key]) {
+                  // console.log('찾았다!!')
+                  this.credentials.id = user.id
+                }
+              }
+            }
+          })
+          this.$emit('login', this.credentials)
         })
         .catch((err) => {
           console.log(err)
