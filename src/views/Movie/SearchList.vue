@@ -24,11 +24,12 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   name: 'Query',
   computed : {
     count () {
-      return this.$route.query.searchMovie.length
+      return _.size(this.$route.query.searchMovie)
     }
   }
 }
