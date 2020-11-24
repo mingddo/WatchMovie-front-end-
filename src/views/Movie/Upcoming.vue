@@ -1,8 +1,8 @@
 <template>
   <div>
-  <carousel class="slide-frame" :per-page="5" :mouse-drag="false">
+  <carousel class="slide-frame" :perPageCustom="[[768, 2], [1024, 5]]" :autoplay="true" :loop="true" :autoplay-timeout="5000">
     <slide v-for="upcomming_movie in upcomming_movies" :key="upcomming_movie.id">
-       <UpcomingItem :upcomming_movie="upcomming_movie"/>
+       <UpcomingItem :upcomming_movie="upcomming_movie" @selectedmovie="selectedmovie"/>
     </slide>
   </carousel>
   </div>
@@ -19,7 +19,12 @@ export default {
   },
   props: {
     upcomming_movies: Array,
-  }
+  },
+    methods: {
+    selectedmovie(selectMovie){
+      this.$emit('selectedmovie',selectMovie)
+    }
+  },
 }
 </script>
 

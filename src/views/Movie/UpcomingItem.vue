@@ -1,11 +1,11 @@
 <template>
   <span>
-    <div class="screen">
-      <img class="poster-img" :src="PosterURL" alt="">
+    <div class="Yscreen" @click="Onclick">
+      <img class="Yposter-img" :src="PosterURL" alt="">
     </div>
-    <div>
+    <!-- <div>
       <span class="movie-title">{{upcomming_movie.title}}</span>
-    </div>
+    </div> -->
   </span>
 </template>
 
@@ -14,6 +14,11 @@
 export default {
   props: {
     upcomming_movie: Object,
+  },
+  methods:{
+    Onclick() {
+      this.$emit('selectedmovie', this.upcomming_movie)
+    },
   },
   computed: {
     PosterURL() {

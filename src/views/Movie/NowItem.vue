@@ -3,9 +3,9 @@
     <div class="screen" @click="Onclick">
       <img class="poster-img" :src="PosterURL" alt="">
     </div>
-    <div>
+    <!-- <div>
       <span class="movie-title">{{now_playing_movie.title}}</span>
-    </div>
+    </div> -->
   </span>
 </template>
 
@@ -34,11 +34,12 @@ export default {
 
 <style>
 .screen {
-  width: 150px;
-  height: auto;
+  width: 98%;
+  height: 100%;
 }
 .poster-img{
   width: 100%;
-  height: auto%;
+  height: 100%;
+  cursor: pointer;
 }
 </style>

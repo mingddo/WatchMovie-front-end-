@@ -18,7 +18,7 @@
       <div class="movie-list">
       <h1>Popular</h1>
       <div class="inner">
-        <Popular :popular_movies="popular_movies" />
+        <Popular :popular_movies="popular_movies" @selectedmovie="selectedmovie" />
       </div>
     </div>
     </div>
@@ -27,7 +27,7 @@
       <div class="movie-list">
       <h1>Upcoming</h1>
       <div class="inner">
-        <Upcoming :upcomming_movies="upcomming_movies" />
+        <Upcoming :upcomming_movies="upcomming_movies" @selectedmovie="selectedmovie" />
       </div>
     </div>
     </div>

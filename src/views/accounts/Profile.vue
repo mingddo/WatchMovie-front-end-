@@ -8,7 +8,7 @@
         <button v-show="status" @click="cutUser" class="profile-btn">구독 취소</button>
         <button v-show="!status" @click="pickUser" class="profile-btn">구독 하기</button>
       </div>
-      <h2>구독자: {{countSubscriber}}</h2>
+      <h2>구독자: {{subscribe_cnt}}</h2>
       <h2>구독 중: {{countSubscribe}}</h2>
     </div>
     <div class="profile-frame">
@@ -32,7 +32,9 @@ export default {
       me: {},
       subscribeList : [],
       subscrubeNum : '',
-      status: false
+      status: false,
+      subscribe_cnt: '',
+      subscriber_cnt: '',
     }
   },
   methods: {
@@ -45,7 +47,9 @@ export default {
         },
       }).then((res)=>{
         console.log(res.data)
+        this.subscribe_cnt = this.subscribe_cnt-1
         this.status = false
+        console.log(this.countSubscriber)
       }).catch((err)=>{
         console.error(err)
       })
@@ -59,6 +63,8 @@ export default {
         },
       }).then((res)=>{
         console.log(res.data)
+        this.subscribe_cnt = this.subscribe_cnt + 1
+        console.log(this.countSubscriber)
         this.status = true
       }).catch((err)=>{
         console.error(err)
@@ -96,6 +102,7 @@ export default {
       }).then((res)=>{
         console.log(res.data)
         this.user_info = res.data
+        this.subscribe_cnt = _.size(this.user_info.subscriber)
 
       }).catch((err)=>{
         console.error(err)
@@ -104,11 +111,11 @@ export default {
     },
   },
   computed:{
-    countSubscriber() {
-      console.log('구독자 수 ',this.user_info.subscriber)
-      return _.size(this.user_info.subscriber)
+    // countSubscriber() {
+    //   console.log('구독자 수 ',this.user_info.subscriber)
+    //   return this.subscribe_cnt = _.size(this.user_info.subscriber)
       
-    },
+    // },
     countSubscribe(){
       return _.size(this.user_info.subscribe)
     },

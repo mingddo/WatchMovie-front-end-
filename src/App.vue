@@ -156,6 +156,7 @@ export default {
 .profile-icon {
   width: 50px;
   height: auto;
+  cursor: pointer;
 }
 
 #seen {

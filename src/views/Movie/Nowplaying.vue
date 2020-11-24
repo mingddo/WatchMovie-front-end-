@@ -1,6 +1,6 @@
 <template>
 
-  <carousel class="slide-frame" :per-page="10" :mouse-drag="false" :loop="true">
+  <carousel class="slide-frame" :v-bind="settings" :perPageCustom="[ [768, 3], [1024, 7]]" :autoplay="true" :autoplay-timeout="5000" :loop="true">
     <slide v-for="now_playing_movie in now_playing_movies" :key="now_playing_movie.id">
        <NowItem :now_playing_movie="now_playing_movie" @selectedmovie="selectedmovie"/>
     </slide>
@@ -13,7 +13,15 @@ import NowItem from './NowItem.vue';
 export default {
   data(){
     return {
-      now_movies: []
+      now_movies: [],
+      settings: {
+        perPage : 10,
+        autoplayHoverPause : true,
+        mouseDrag: false,
+        loop: true,
+        autoplay: true,
+        speed: 1500,
+      },
     }
   },
   components: {

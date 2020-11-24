@@ -1,11 +1,11 @@
 <template>
   <span>
-    <div class="screen">
-      <img class="poster-img" :src="PosterURL" alt="">
+    <div class="Yscreen" @click="Onclick">
+      <img class="Yposter-img" :src="PosterURL" alt="">
     </div>
-    <div>
+    <!-- <div>
       <span class="movie-title">{{popular_movie.title}}</span>
-    </div>
+    </div> -->
   </span>
 </template>
 
@@ -14,6 +14,11 @@
 export default {
   props: {
     popular_movie: Object,
+  },
+  methods: {
+  Onclick() {
+    this.$emit('selectedmovie', this.now_playing_movie)
+  },
   },
   computed: {
     PosterURL() {
@@ -24,5 +29,13 @@ export default {
 </script>
 
 <style>
-
+.Yscreen{
+  width: 98%;
+  height: auto;
+}
+.Yposter-img{
+    width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
 </style>
