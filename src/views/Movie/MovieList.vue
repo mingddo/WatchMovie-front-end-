@@ -8,7 +8,7 @@
 
 
     <div class="inner">
-      <h1>Now Playing</h1>
+      <h1 class="nanum-gothic-font left-text">Now Playing</h1>
       <div >
         <Nowplaying :now_playing_movies="now_playing_movies" @selectedmovie="selectedmovie" />
       </div>
@@ -217,7 +217,9 @@ export default {
 </script>
 
 <style>
-
+.left-text{
+  text-align: left;
+}
 .detail-title{
   font-size: 2rem;
   word-break: keep-all;
