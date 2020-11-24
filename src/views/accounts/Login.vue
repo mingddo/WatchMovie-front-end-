@@ -51,7 +51,8 @@ export default {
           localStorage.setItem('jwt', res.data.token)
           this.$emit('login')
           this.$forceUpdate()
-          this.$router.push({ name: 'Home', query: { username: this.space}})
+          // console.log('누구냐면..', this.credentials.username)
+          this.$router.push({ name: 'Home', query: { username: this.credentials.username}})
         })
         .catch((err) => {
           console.log(err)

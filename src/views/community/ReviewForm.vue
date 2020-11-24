@@ -1,26 +1,40 @@
 <template>
   <div class="review-place">
     <form class="review-form" @submit="addReview">
-      <label for="movietitle">영화제목</label>
-      <input type="text" id="movietitle" class="form-control w-100" v-model.trim="movietitle" aria-describedby="passwordHelpBlock">
-      <label for="title">제목</label>
-      <input type="text" id="title" class="form-control w-100" v-model.trim="title" aria-describedby="passwordHelpBlock">
-      <label for="content">내용 : </label>
-      <textarea name="content" class="form-control" cols="100" rows="10" id="content" v-model.trim="content"></textarea> <br>
-      <label for="rank">평점 : </label>
-      <select id="rank" class="custom-select custom-select-lg mb-3" placeholder="RANK" v-model="rank">
-        <option selected>Rank</option>
-        <option value= 1>1</option>
-        <option value= 2>2</option>
-        <option value= 3>3</option>
-        <option value= 4>4</option>
-        <option value= 5>5</option>
-      </select>
-      
-      
-
+      <div class="movietitle-input d-flex row">
+        <label for="movietitle" class="col">영화 :</label>
+        <input type="text" id="movietitle" class="form-control col-lg-10 col-md-8 col-sm-6 col-4" v-model.trim="movietitle" aria-describedby="passwordHelpBlock">
+      </div>
+      <br>
+      <div class="title-input d-flex row">
+        <label for="title" class="col">제목 :</label>
+        <input type="text" id="title" class="form-control col-lg-10 col-md-8 col-sm-6 col-4" v-model.trim="title" aria-describedby="passwordHelpBlock"> 
+      </div>
+      <br>
+      <div class="content-input d-flex row">
+        <label for="content" class="col">내용 :</label>
+        <textarea name="content" class="form-control col-lg-10 col-md-8 col-sm-6 col-4" cols="100" rows="10" id="content" v-model.trim="content"></textarea>
+      </div>
+      <br>
+      <div class="rank-input d-flex row">
+        <label for="rank" class="col">평점 : </label>
+        <select id="rank" class="custom-select custom-select-lg mb-3 col-lg-10 col-md-8 col-sm-6 col-4" placeholder="RANK" v-model="rank">
+          <option selected>Rank</option>
+          <option value= 1>1</option>
+          <option value= 2>2</option>
+          <option value= 3>3</option>
+          <option value= 4>4</option>
+          <option value= 5>5</option>
+        </select>
+      </div>
+    
       <!-- <input type="number" name="rank" id="rank" maxlength="10"> -->
-      <button @click="allow">제출하기</button>
+      <button @click="allow" class="btn btn-lg btn-link" title="작성하기">
+        <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-check-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+          <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
+        </svg>
+      </button>
     </form>
   </div>
 </template>
@@ -91,6 +105,9 @@ export default {
 </script>
 
 <style>
+.movie-title-input {
+  
+}
 .review-form{
   width: 60%;
   height: auto;
