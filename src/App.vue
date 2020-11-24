@@ -163,6 +163,9 @@ export default {
 </script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Gothic&family=Noto+Sans+KR:wght@300;700&display=swap');
+
 .profile-icon {
   width: 50px;
   height: auto;
@@ -173,14 +176,22 @@ export default {
   display: block;
   transition-delay: 0.5s
 }
-
+.noto-sans-font{
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.nanum-gothic-font{
+  font-family: 'Nanum Gothic', sans-serif;
+}
+.gugi-font{
+  font-family: 'Gugi', cursive;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+ 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
-  background-color:#141414;
+  background-color: #41292B;
 
 }
 

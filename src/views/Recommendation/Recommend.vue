@@ -6,7 +6,7 @@
       
       <iframe allow="autoplay;" width="100%" height="315" :src="recommendMovieData.video" frameborder="0"></iframe>
       <div class="recommend-text">
-        <div class="rexommend-title">
+        <div class="rexommend-title gugi-font">
         <h2>{{recommendMovieData.title}}</h2>
         </div>
         <div>
@@ -14,8 +14,8 @@
         <div v-else title="미성년관람가능">⭕</div>
         </div>
       </div>
-      <h6>{{recommendMovieData.release_date}}</h6>
-      <p class="rexommend-title">{{recommendMovieData.overview}}</p>
+      <h6 class="noto-sans-font">{{recommendMovieData.release_date}}</h6>
+      <p class="rexommend-title nanum-gothic-font">{{recommendMovieData.overview}}</p>
     </div>
   </div>
 </template>
