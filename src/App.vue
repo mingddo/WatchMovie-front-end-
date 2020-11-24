@@ -73,7 +73,7 @@
             </div>
             
         </div>
-        <span>{{ user.username }} 님 안녕하세요</span>
+        <span>{{ getUserName1 }} 님 안녕하세요</span>
         <router-link to="/">Home</router-link> |
         <router-link to="/reviewlist">ReviewList</router-link> |
         <router-link to="/reviewform">ReviewForm</router-link> |
@@ -107,19 +107,19 @@ export default {
   methods: {
     CanSee () {
       this.canIseen = true
-      console.log("이제 보여", this.canIseen)
+      // console.log("이제 보여", this.canIseen)
     },
     OnClick() {
       const keyword = this.inputMovie
       axios.get(`http://127.0.0.1:8000/movies/search/${keyword}/`, )
       .then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
 
         this.searchMovie = res.data
-        console.log(this.searchMovie)
+        // console.log(this.searchMovie)
         this.$router.push({ name: "SearchList", query: { searchMovie: this.searchMovie, inputMovie : this.inputMovie }, });
         this.canIseen = false
-        console.log("이제 안보여", this.canIseen)
+        // console.log("이제 안보여", this.canIseen)
       })
       .catch((err) => {
         console.log(err)
@@ -131,7 +131,7 @@ export default {
       this.$router.push({ name: "Profile", query:{ userId: this.user.user_id}});
     },
     getUserName() {
-      // console.log(VueJwtDecode.decode(localStorage.getItem('jwt')))
+      console.log("이름 가져오는 것",VueJwtDecode.decode(localStorage.getItem('jwt')))
       this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
     },
     setLogin() {
@@ -143,13 +143,23 @@ export default {
       this.$router.push("/login");
     },
   },
+  computed:{
+     getUserName1() {
+      console.log("이름 가져오는 것",VueJwtDecode.decode(localStorage.getItem('jwt')))
+      return VueJwtDecode.decode(localStorage.getItem("jwt")).username
+    },
+  },
+ 
   created() {
     if (localStorage.getItem("jwt")) {
       this.login = true;
-      this.getUserName();
+      // this.getUserName();
+
     }
+    this.getUserName();
   },
-};
+
+}
 </script>
 
 <style>
