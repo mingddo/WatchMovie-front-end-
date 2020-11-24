@@ -31,16 +31,27 @@
       </div>
     </div>
     </div>
-    <!-- modal -->
-    <!-- Button trigger modal -->
-     <div :class="{modal_display:modal_toggle}" style="width: 18rem;" >
-      <img :src="selected_movie.poster_path" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{selected_movie.title}}</h5>
-        <p class="card-text">평점 : {{selected_movie.vote_average}}</p>
-        <input @click="addWishMovie" type="button" value="wish_movie">
-        <input type="button" value="back" @click="modalToggle">
-      </div>
+    <div class="modal-Bg" :class="{bgactive: modal_toggle}">
+      <div class="modal-box">
+        <div class="modal-box-frame">
+        <div class="modal-img-frame">
+          <img :src="selected_movie.poster_path" alt="Card image cap">
+        </div>
+
+        <hr clas="modal-hr">
+
+        <h1>{{selected_movie.title}}</h1>
+        <h3 class="card-text">평점 : {{selected_movie.vote_average}}</h3>
+        <button @click="addWishMovie">wish_movie
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
+        </button>
+        <span @click="closeDetail" class="modal-close">X</span>
+        </div>
+
+    </div>
+
     </div>
       </div>
   
@@ -74,7 +85,7 @@ export default {
       popular_movies: [],
       upcomming_movies: [],
       selected_movie: {},
-      modal_toggle: true,
+      modal_toggle: false,
       user: '',
       userWishes: [],
       recommendMovie: 0,
@@ -82,6 +93,9 @@ export default {
     };
   },
   methods: {
+    closeDetail(){
+      this.modal_toggle = false
+    },
     getWish () {
       axios ({
         url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/`,
@@ -134,15 +148,13 @@ export default {
     getUserName() {
     // console.log(VueJwtDecode.decode(localStorage.getItem('jwt')))
     this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
-    console.log(this.user)
+    // console.log(this.user)
     },
-    modalToggle(){
-      this.modal_toggle = true
-    },
+  
     selectedmovie(selectMovie) {
       this.selected_movie = selectMovie;
-      this.modal_toggle = false;
-      console.log(this.user)
+      this.modal_toggle = true;
+      // console.log(this.user)
       console.log("MovieList", this.selected_movie);
     },
     get_nowplaying_list() {
@@ -154,7 +166,7 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.now_playing_movies = res.data;
         })
         .catch((err) => {
@@ -170,7 +182,7 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.popular_movies = res.data;
         })
         .catch((err) => {
@@ -186,7 +198,7 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.upcomming_movies = res.data;
         })
         .catch((err) => {
@@ -205,6 +217,76 @@ export default {
 </script>
 
 <style>
+.modal-hr{
+  border: solid rgba(131, 2, 2, 0.671);
+  width: 40%;
+  margin: auto;
+}
+.modal-box-frame{
+  position: relative;
+  width: 80%;
+  height: auto;
+  margin: auto;
+}
+.modal-img-frame{
+  width: 70%;
+  height: 70%;
+  margin: auto;
+}
+.modal-img-frame img{
+  width: 80%;
+  height: auto;
+  margin: auto;
+
+}
+.modal-close{
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  font-weight: bold;
+  font-size: 28px;
+  cursor: pointer;
+  color: rgba(255, 255, 255);
+}
+.modal-Bg{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity0.5s;;
+}
+.bgactive{
+  visibility: visible;
+  opacity: 1;
+}
+.modal-box{
+  border-radius: 15px;
+  color: white;
+  font-family: sans-serif;
+  position: relative;
+  background-color: rgb(0, 0, 0, 0.9);
+  width: 30%;
+  height: 65%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+.modal-box button{
+  padding: 10px 30px;
+  background-color: #f3ef07;
+  color: black;
+  border: none;
+  cursor: pointer;
+  margin: auto;
+}
 .modal_display {
   display: none;
 }
@@ -216,21 +298,6 @@ export default {
   max-width: 1500px;
   margin: 0 auto;
 }
-.main-home section {
-  margin: 40px 60px;
-}
 
-.fcknflexbox {
-  display: flex;
-  justify-content: space-around;
-}
 
-.fcknflexbox div > * {
-  margin: 10px;
-}
-
-.home-boxoffice > h2,
-.home-stockoffice > h2 {
-  margin-left: 40px;
-}
 </style>

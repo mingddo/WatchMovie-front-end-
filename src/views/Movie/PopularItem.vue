@@ -17,7 +17,7 @@ export default {
   },
   methods: {
   Onclick() {
-    this.$emit('selectedmovie', this.now_playing_movie)
+    this.$emit('selectedmovie', this.popular_movie)
   },
   },
   computed: {
