@@ -31,18 +31,26 @@
     <div class="modal-Bg" :class="{bgactive: modal_toggle}">
       <div class="modal-box">
 
-      <div class="modal-box-bgimg" 
-      :style="{backgroundImage:'url('+selected_movie.poster_path+')', backgroundRepeat:background_repeat, backgroundSize: bgSize}">
+      <div class="modal-box-bgimg">
+      <img :src="selected_movie.poster_path" alt="">
     </div>
-      <div class="gradient">그라데이션 그라데이션</div>
+      <!-- <div class="gradient">그라데이션 그라데이션</div> -->
       <span class="detail-text">
-        <h1>{{selected_movie.title}}</h1>
-        <h3 class="card-text">평점 : {{selected_movie.vote_average}}</h3>
-        <button @click="addWishMovie">wish_movie
+        <p class="detail-title gugi-font">{{selected_movie.title}}</p>
+        <div>
+
+        <p class="card-text">평점 : {{selected_movie.vote_average}}</p>
+        <div class="progress">
+        <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" :aria-valuenow="selected_movie.vote_average" aria-valuemin="0" aria-valuemax="10"></div>
+        </div>
+        </div>
+        <div class="detail-btn-frame">
+        <button class="detail-btn" @click="addWishMovie">wish_movie
           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
           </svg>
         </button>
+        </div>
       </span>
         <span @click="closeDetail" class="modal-close">X</span>
       
@@ -209,19 +217,30 @@ export default {
 </script>
 
 <style>
-.inner h1{
-  margin: 100px auto;
+
+.detail-title{
+  font-size: 2rem;
+  word-break: keep-all;
 }
 .detail-text{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  width: 40%;
+  height: 90%;
+  font-size: 1.063rem;
   z-index: 100;
-  margin: auto;
+  margin-right: 3rem;
 }
 .gradient{
   position: relative;
-  bottom: 75px;
+  bottom: 160px;
   z-index: 60;
   width: 100%;
-  height: 100px;
+  height: 40%;
   margin: auto;
   background: linear-gradient( to bottom, rgba(0, 0, 0, 0), black );
 }
@@ -233,25 +252,13 @@ export default {
   margin-bottom: auto;
 }
 
-.modal-img-frame{
-  width: 100%;
-  height: 70%;
-  margin: auto;
-}
-.modal-img-frame img{
-  border-radius: 15px;
-  width: 100%;
-  height: auto;
-  margin: auto;
-
-}
 .modal-close{
    z-index: 50;
   position: absolute;
   top: 10px;
   right: 18px;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 2rem;
   cursor: pointer;
   color: rgba(255, 255, 255);
 }
@@ -261,7 +268,7 @@ export default {
   height: 100vh;
   top: 0;
   left: 0;
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgb(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -278,8 +285,14 @@ export default {
   border-radius: 15px;
   background-color: linear-gradient( to right, rgba(0, 0, 0, 0), black );
   background-size: cover;
+  width: 50%;
+  height: 100%;
+}
+.modal-box-bgimg img{
+  border-radius: 15px;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 .modal-box{
   background-color: black;
@@ -287,20 +300,22 @@ export default {
   color: white;
   font-family: sans-serif;
   position: relative;
-  width: 30%;
-  height: 80%;
+  width: 40%;
+  height: 50%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
 }
 .modal-box button{
-  padding: 10px 30px;
+  width: 100%;
+  padding: 10px 20px;
   background-color: #f3ef07;
   color: black;
   border: none;
   cursor: pointer;
   margin: 10px, auto;
+  font-size: 1rem;
 }
 .modal_display {
   display: none;
@@ -309,7 +324,7 @@ export default {
   padding: 30px 40px;
   text-align: center;
   color: white;
-  background-color: #141414;;
+  background-color: # #41292B;;;
 }
 .movie-list .inner {
   width: 80%;
@@ -321,6 +336,8 @@ export default {
   width: 80%;
   height: auto;
   margin: auto;
-  background-color: rgba(20, 27, 24, 0.918);
+  background-color: #F7D949;
+  color: #141414;
 }
+/* :style="{backgroundImage:'url('+selected_movie.poster_path+')', backgroundRepeat:background_repeat, backgroundSize: bgSize}" */
 </style>
