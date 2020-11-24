@@ -23,7 +23,7 @@
           @keypress.enter="login"
         >
       </div>
-      <input @click="login" class="btn" type="button" value="login">
+      <input @click="login" class="login-btn" type="button" value="login">
     </div>
     
 
@@ -39,6 +39,7 @@ export default {
       credentials: {
         username: '',
         password: '',
+        space: '',
       }
     }
   },
@@ -49,7 +50,8 @@ export default {
           // console.log(res)
           localStorage.setItem('jwt', res.data.token)
           this.$emit('login')
-          this.$router.push({ name: 'ReviewList' })
+          this.$forceUpdate()
+          this.$router.push({ name: 'Home', query: { username: this.space}})
         })
         .catch((err) => {
           console.log(err)
@@ -113,7 +115,7 @@ font-family: sans-serif;
   float: left;
   margin: 10px;
 }
-.btn {
+.login-btn {
 width: 100%;
 background: none;
 border: 2px solid  #ce1010;

@@ -34,7 +34,8 @@ export default {
   height: auto;
 }
 .Yposter-img{
-    width: 100%;
+  border-radius: 5px;
+  width: 100%;
   height: 100%;
   cursor: pointer;
 }

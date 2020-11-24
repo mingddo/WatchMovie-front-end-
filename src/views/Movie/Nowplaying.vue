@@ -1,10 +1,14 @@
 <template>
+  <span>
 
-  <carousel class="slide-frame" :v-bind="settings" :perPageCustom="[ [768, 3], [1024, 7]]" :autoplay="true" :autoplay-timeout="5000" :loop="true">
+  <carousel class="slide-frame" :perPageCustom="[ [768, 3], [1024, 7]]" 
+  :navigationNextLabel="next"
+  :autoplay="true" :autoplay-timeout="5000" :loop="true">
     <slide v-for="now_playing_movie in now_playing_movies" :key="now_playing_movie.id">
        <NowItem :now_playing_movie="now_playing_movie" @selectedmovie="selectedmovie"/>
     </slide>
   </carousel>
+  </span>
 </template>
 
 <script>
@@ -14,14 +18,7 @@ export default {
   data(){
     return {
       now_movies: [],
-      settings: {
-        perPage : 10,
-        autoplayHoverPause : true,
-        mouseDrag: false,
-        loop: true,
-        autoplay: true,
-        speed: 1500,
-      },
+      next: '▶'
     }
   },
   components: {
@@ -37,6 +34,13 @@ export default {
       this.$emit('selectedmovie',selectMovie)
     }
   },
+  computed:{
+    navigation_next(){
+      return <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+</svg>
+    }
+  }
 };
 </script>
 

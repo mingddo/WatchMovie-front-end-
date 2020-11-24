@@ -38,6 +38,7 @@ export default {
   height: 100%;
 }
 .poster-img{
+  border-radius: 5px;
   width: 100%;
   height: 100%;
   cursor: pointer;
