@@ -20,7 +20,7 @@
       
 
       <!-- <input type="number" name="rank" id="rank" maxlength="10"> -->
-      <button>제출하기</button>
+      <button @click="allow">제출하기</button>
     </form>
   </div>
 </template>
@@ -28,40 +28,65 @@
 <script>
 import axios from 'axios'
 export default {
-data() {
-  return {
-    movietitle : '',
-    title : '',
-    content: '',
-    rank: '',
+  data() {
+    return {
+      movietitle : '',
+      title : '',
+      content: '',
+      rank: '',
+      canIgo: false,
+    }
+  },
+  methods: {
+    addReview(event) {
+      event.preventDefault()
+      axios({
+        url:'http://127.0.0.1:8000/community/',
+        method: 'POST',
+        data: {
+          movie_title: this.movietitle,
+          title: this.title,
+          content: this.content,
+          rank: this.rank
+        },
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        },
+      }).then((res)=>{
+        console.log(res.data)
+        this.$emit('addReview', res.data)
+        this.$router.push({name: 'ReviewList' })
+      }).catch((err)=>{
+        console.error(err)
+      })
+      
+    },
+    allow () {
+      if (this.movietitle == '') {
+        alert ('영화명을 입력해주세요')
+      } else if (this.title == '') {
+        alert ('제목을 입력해주세요')
+      } else if (this.content == '') {
+        alert ('내용을 입력해주세요')
+      } else if (this.rank == '') {
+        alert ('평점을 입력해주세요')
+      } else {
+        this.canIgo = true
+      }
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (this.canIgo) {
+      next ()
+    } else {
+      const answer = window.confirm('데이터가 저장되지 않았습니다. 페이지를 나가시겠습니까?')
+      if (answer) {
+        next ()
+      } else {
+        next(false)
+      }
+    }
   }
-},
-methods: {
-  addReview(event) {
-    event.preventDefault()
-    axios({
-      url:'http://127.0.0.1:8000/community/',
-      method: 'POST',
-      data: {
-        movie_title: this.movietitle,
-        title: this.title,
-        content: this.content,
-        rank: this.rank
-      },
-      headers: {
-        Authorization: `JWT ${localStorage.getItem('jwt')}`
-      },
-    }).then((res)=>{
-      console.log(res.data)
-      this.$emit('addReview', res.data)
-      this.$router.push({name: 'ReviewList' })
-    }).catch((err)=>{
-      console.error(err)
-    })
-    
-  }
-},
-
 }
 </script>
 
