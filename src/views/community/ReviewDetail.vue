@@ -228,6 +228,8 @@ export default {
         });
     },
     delete_review() {
+      const confirm = window.confirm('정말로 삭제하시겠습니까?')
+      if (confirm == true) {
       axios({
         url: `http://127.0.0.1:8000/community/${this.review_id}/`,
         method: "DELETE",
@@ -242,7 +244,7 @@ export default {
         .catch((err) => {
           console.error(err);
         });
-    },
+    }},
   },
   computed: {},
   created() {
