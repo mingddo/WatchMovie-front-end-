@@ -2,11 +2,21 @@
   <div>
     <h1>Review List</h1>
     <div class="container">
+      <div class="review-nav d-flex">
+          <button class="btn btn-link" @click="goToNew" title="새글 작성">
+            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+            </svg>
+          </button>
+      
+      </div>
+        
       <table class="table">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">title</th>
+            <th scope="col">Movietitle</th>
             <th scope="col">rank</th>
             <th scope="col">user</th>
             <th scope="col">created_at</th>
@@ -40,7 +50,7 @@ export default {
     createReview(review){
     this.reviews.push(review)
     // console.log('푸시 잘된다.')
-  },
+    },
     getReviews() {
       axios({
       url:'http://127.0.0.1:8000/community/',
@@ -54,12 +64,15 @@ export default {
     }).catch((err)=>{
       console.error(err)
     })
+    },
+    goToNew () {
+      this.$router.push('/reviewform')
+    }
   },
-  
-},
   mounted() {
     this.getReviews()
-  }
+  },
+
 }
 </script>
 
@@ -67,7 +80,10 @@ export default {
   tr {
     border-bottom: 1px solid;
   }
-.unvisibility{
-  display: none;
-}
+  .unvisibility{
+    display: none;
+  }
+  .review-nav {
+    text-align: left;
+  }
 </style>
