@@ -2,7 +2,25 @@
   <div class="container">
     <div v-if="revied" class="review-show review-movietitle bg-yellow black-font">
       <div>
-        <h1 class="gugi-font">{{ movietitle }}</h1>
+        <div class="btn-group dropright">
+          <button type="button" class="btn btn-link dropdown-toggle d-flex" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <h1 class="gugi-font">{{ movietitle }}</h1>
+          </button>
+          <div class="dropdown-menu">
+            <a @click="searchThisMovie" class="dropdown-item d-flex justify-content-center" href="#">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+              </svg>
+            </a>
+            <a @click="addWishMovie" class="dropdown-item d-flex justify-content-center" href="#">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
         <h6>{{ starRank }}</h6>
       </div>
       <hr>
@@ -115,6 +133,7 @@
 
 <script>
 import axios from "axios";
+import VueJwtDecode from "vue-jwt-decode";
 // import _ from 'lodash';
 import CommentForm from "./comment/CommentForm.vue";
 import CommentItem from "./comment/CommentItem.vue";
@@ -145,10 +164,57 @@ export default {
       updated_content: "",
       updated_rank: "",
       updated: false,
+      user: '',
+      wishMovie: '',
+      wishMovieId: '',
     };
   },
   name: "ReviewDetail",
   methods: {
+    searchThisMovie () {
+      const keyword = this.movietitle
+      axios.get(`http://127.0.0.1:8000/movies/search/${keyword}/`, )
+      .then((res) => {
+        console.log(res.data)
+        this.$router.push({ name: "SearchList", query: { searchMovie: res.data, inputMovie : this.movietitle }, });
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    },
+    addWishMovie(){
+      axios({
+        url: `https://api.themoviedb.org/3/search/movie?query=${this.movietitle}&api_key=8891da6c530f993ba51066b80edfa91d`,
+        method: 'GET',
+      })
+      .then((res) => {
+        console.log(res.data.results[0])
+        this.wishMovie = res.data.results[0].title
+        this.wishMovieId = res.data.results[0].id
+        this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
+        // console.log('유저는', this.user)
+        // console.log(this.wishMovie)
+        // console.log(this.wishMovieId)
+        axios({
+        url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/`,
+        method: "POST",
+        data:{
+          title: this.wishMovie,
+          num: this.wishMovieId,
+        },
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      }).then(()=>{
+        // console.log('됏니?', res.data)
+        alert(`위시리스트에 ${this.wishMovie}가 추가되었습니다`)
+
+      })
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+    },
     backtodetail(){
       this.revied = true
     },
@@ -303,6 +369,9 @@ export default {
 </script>
 
 <style>
+.dropdown-size {
+  width: 20px;
+}
 .comment_list {
   list-style: none;
   /* border-bottom: rgb(141, 136, 136) solid;

@@ -1,9 +1,11 @@
 <template>
   <div class="comment-box">
+    <p>{{ comment.usernName }}</p>
     <table class="table">
       <tbody class="comment-table">
         <tr v-if="commented" class="row">
           <td class="col-1">
+            
             <button type="button" class="btn btn-link" @click="goProfile" title="프로필페이지 가기">
               <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
@@ -132,6 +134,6 @@ props : {
     width: 100%
   }
   .comment-table {
-    color: white;
+    color: black;
   }
 </style>
