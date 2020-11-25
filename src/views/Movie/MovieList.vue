@@ -113,7 +113,7 @@ export default {
         // console.log("보여주세요!", randomIndex)
         this.recommendMovie = this.userWishes[randomIndex].num
         } else {
-          this.recommendMovie = '2021'
+          this.recommendMovie = '420817'
         }
         // console.log("보여주세여!", this.recommendMovie.num)
       }).then(() => {
@@ -354,6 +354,7 @@ font-family: 'Nanum Gothic', sans-serif;
   text-align: center;
   color: white;
   background-color:#141414;
+  margin: 3rem auto;
 }
 .movie-list .inner {
   width: 80%;
@@ -362,9 +363,9 @@ font-family: 'Nanum Gothic', sans-serif;
 .recommend-box{
   border: none;
   border-radius: 30px;
-  width: 80%;
-  height: auto;
-  margin: auto;
+  width: 90%;
+  height: 80%;
+  margin: 3rem auto;
   /* background-color: #F7D949; */
   color: #141414;
 }
