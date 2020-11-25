@@ -1,20 +1,20 @@
 <template>
-  <div class="container">
-    <div v-if="revied" class="review-show review-movietitle bg-yellow black-font">
+  <div class="container review-movietitle">
+    <div v-if="revied" class="review-show bg-gray">
       <div>
-        <div class="btn-group dropright">
-          <button type="button" class="btn btn-link dropdown-toggle d-flex" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <h1 class="gugi-font">{{ movietitle }}</h1>
+        <div class="btn-group dropright color-lightgray">
+          <button type="button" class="btn btn-link dropdown-toggle d-flex color-lightgray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <h1 class="gugi-font color-lightgray">{{ movietitle }}</h1>
           </button>
           <div class="dropdown-menu">
-            <a @click="searchThisMovie" class="dropdown-item d-flex justify-content-center" href="#">
-              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <a @click="searchThisMovie" class="dropdown-item d-flex justify-content-center color-lightgray" href="#">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="black" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
                 <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
               </svg>
             </a>
             <a @click="addWishMovie" class="dropdown-item d-flex justify-content-center" :class="{disabled : !this.canIwish}" href="#">
-              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="black" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
               </svg>
             </a>
@@ -29,22 +29,22 @@
           <h3 class="nanum-gothic-font"><b>{{ title }}</b></h3>
         </div>
         <div class="review-U-D">
-          <div class="btn-group" title="수정 및 삭제">
-            <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-justify" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <div class="btn-group purple" title="수정 및 삭제">
+            <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split color-lightgray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-justify" fill="lightgray" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
               </svg>
             </button>
             <div class="dropdown-menu">
               <button @click="change_updated_state" type="button" class="btn btn-link dropdown-item" title="수정"> 
-                <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="black" xmlns="http://www.w3.org/2000/svg">
                   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                 </svg>
               </button>
               <div class="dropdown-divider"></div>
               <button @click="delete_review" type="button" class="btn btn-link dropdown-item" title="삭제">
-                <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="black" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                 </svg>
@@ -64,53 +64,45 @@
         <hr>
       </div>
     </div>
+
     <div v-else class="movie-update">
       <div class="review-form">
-        <label for="movietitle">영화제목</label>
-        <input
-          type="text"
-          id="movietitle"
-          class="form-control w-100"
-          v-model.trim="updated_movietitle"
-          aria-describedby="passwordHelpBlock"
-        />
-        <label for="title">제목</label>
-        <input
-          type="text"
-          id="title"
-          class="form-control w-100"
-          v-model.trim="updated_title"
-          aria-describedby="passwordHelpBlock"
-        />
-        <label for="content">내용 : </label>
-        <textarea
-          name="content"
-          class="form-control"
-          cols="100"
-          rows="10"
-          id="content"
-          v-model.trim="updated_content"
-        ></textarea>
-        <br />
-        <label for="rank">평점 : </label>
-        <select
-          id="rank"
-          class="custom-select custom-select-lg mb-3"
-          placeholder="RANK"
-          v-model="updated_rank"
-        >
-          <option selected>Rank</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-        <br />
-
-        <button @click="updateReview">제출하기</button>
+      <div class="movietitle-input">
+        <input title="영화명" placeholder="영화명을 입력해주세요" type="text" id="movietitle" class="form-control" v-model.trim="updated_movietitle" aria-describedby="passwordHelpBlock">
       </div>
-      <button @click="backtodetail">back</button>
+      <br>
+      <div class="title-input">
+        <input title="리뷰 제목" placeholder="리뷰 제목을 입력해주세요" type="text" id="title" class="form-control" v-model.trim="updated_title" aria-describedby="passwordHelpBlock"> 
+      </div>
+      <br>
+      <div class="content-input">
+        <textarea title="리뷰 내용" placeholder="내용을 입력해주세요" name="content" class="form-control" cols="100" rows="10" id="content" v-model.trim="updated_content"></textarea>
+      </div>
+      <br>
+      <div class="rank-input" title="평점">
+        <select id="rank" class="custom-select custom-select-lg mb-3" placeholder="RANK" v-model="updated_rank">
+          <option selected>Rank</option>
+          <option value= 1>1</option>
+          <option value= 2>2</option>
+          <option value= 3>3</option>
+          <option value= 4>4</option>
+          <option value= 5>5</option>
+        </select>
+      </div>
+        <br>
+        <div class="d-flex justify-content-around">
+          <button @click="backtodetail" class="btn btn-lg btn-link" title="뒤로가기">
+            <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-arrow-left-square-fill" fill="lightgray" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm9.5 8.5a.5.5 0 0 0 0-1H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5z"/>
+            </svg>
+          </button>
+          <button @click="updateReview" class="btn btn-lg btn-link" title="수정하기">
+            <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-check-square-fill" fill="lightgray" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
 
     <CommentForm v-if="revied" @addComment="AddComment" :review_id="review_id" />
@@ -389,12 +381,13 @@ export default {
 }
 .review-content {
   text-align: left;
-  min-height: 100px;
+  min-height: 5rem;
 }
 .review-movietitle {
-  border-radius: 30px;
-  padding:10px;
-  margin: 10px;
+  border-radius: 10px;
+  padding: 3rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white
 }
 .review-created-at {
   text-align: right;
@@ -403,13 +396,7 @@ export default {
 .review-U-D {
   text-align: right;
 }
-.border-light {
-  border-color:lightgrey;
-}
-.bg-yellow {
-  background-color: #F7D949;
-}
-.black-font {
-  color:black;
+.color-lightgray {
+  color: lightgray;
 }
 </style>
