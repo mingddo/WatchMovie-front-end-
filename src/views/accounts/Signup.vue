@@ -83,7 +83,7 @@ font-family: sans-serif;
 .signup-box h1{
   float: left;
   font-size: 40px;
-  border-bottom: 6px solid #0f9e30;
+  border-bottom: 6px solid #F20AC8;
   margin-bottom: 50px;
   padding: 13px 0;
 
@@ -114,7 +114,7 @@ font-family: sans-serif;
 .s_btn {
 width: 100%;
 background: none;
-border: 2px solid  #0f9e30;
+border: 2px solid  #F20AC8;
 color: white;
 padding: 5px;
 font-size: 18px;

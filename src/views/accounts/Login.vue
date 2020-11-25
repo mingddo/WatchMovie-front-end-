@@ -83,7 +83,7 @@ font-family: sans-serif;
 .login-box h1{
   float: left;
   font-size: 40px;
-  border-bottom: 6px solid #ce1010;
+  border-bottom: 6px solid #45269b;
   margin-bottom: 50px;
   padding: 13px 0;
 
@@ -114,7 +114,7 @@ font-family: sans-serif;
 .login-btn {
 width: 100%;
 background: none;
-border: 2px solid  #ce1010;
+border: 2px solid  #45269b;
 color: white;
 padding: 5px;
 font-size: 18px;
