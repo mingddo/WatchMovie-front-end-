@@ -177,7 +177,7 @@ export default {
     },
     addWishMovie(){
       axios({
-        url: `https://api.themoviedb.org/3/search/movie?query=${this.movietitle}&api_key=8891da6c530f993ba51066b80edfa91d`,
+        url: `https://api.themoviedb.org/3/search/movie?query=${this.movietitle}&api_key=8891da6c530f993ba51066b80edfa91d&language=ko-kr`,
         method: 'GET',
       })
       .then((res) => {
@@ -203,7 +203,7 @@ export default {
         },
       }).then(()=>{
         // console.log('됏니?', res.data)
-        alert(`위시리스트에 ${this.wishMovie}가 추가되었습니다`)
+        alert(`위시리스트에 ${this.wishMovie} 이(가 추가되었습니다`)
         this.canIwish = false
         })
         .catch((err) => {

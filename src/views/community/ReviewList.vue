@@ -27,6 +27,11 @@
           :idx="idx" :review="review"/> 
         </tbody>
       </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-center">
+          <li v-for="(page, idx) in pages" :key="idx" class="page-item"><a class="page-link color-light-gray" href="#" @click="goTopage(page)">{{page}}</a></li>
+        </ul>
+      </nav>
     </div>
     <ReviewForm @addReview="createReview" class="unvisibility" />
     </div>
@@ -44,16 +49,31 @@ export default {
   data(){
     return {
       reviews: [],
+      pages: 1,
+      currentPage : 1,
     }
   },
   methods: {
+    goTopage (page) {
+      axios({
+      url:`http://127.0.0.1:8000/community/page/${page}/`,
+      method: 'GET',
+      headers: {
+        Authorization: `JWT ${localStorage.getItem('jwt')}`
+      },
+      }).then((res) => {
+        this.reviews = res.data
+      }).catch((err) => {
+        console.error(err)
+      })
+    },
     createReview(review){
     this.reviews.push(review)
     // console.log('푸시 잘된다.')
     },
     getReviews() {
       axios({
-      url:'http://127.0.0.1:8000/community/',
+      url:`http://127.0.0.1:8000/community/`,
       method: 'GET',
       headers: {
         Authorization: `JWT ${localStorage.getItem('jwt')}`
@@ -61,6 +81,9 @@ export default {
     }).then((res)=>{
       // console.log(res.data)
       this.reviews = res.data
+      const count = this.reviews.length
+      this.pages = Math.ceil(count/10)
+      console.log('몇개?', this.pages)
     }).catch((err)=>{
       console.error(err)
     })
@@ -69,8 +92,12 @@ export default {
       this.$router.push('/reviewform')
     }
   },
+  created () {
+    this.goTopage(1);
+  },
   mounted() {
-    this.getReviews()
+    this.getReviews();
+    this.goTopage(1);
   },
 }
 </script>
@@ -95,5 +122,9 @@ export default {
   }
   .review-nav {
     text-align: left;
+  }
+  .color-light-gray {
+    background-color: lightgray;
+    color: black;
   }
 </style>

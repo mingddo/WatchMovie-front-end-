@@ -32,7 +32,11 @@
       </svg>
       </div>
       <ul class="profile-ul" :class="{hide:wish_btn_toggle}">
-        <p class="list-item" v-for="wish in user_info.wish_movie" :key="wish.id">{{wish.title}}</p>
+        <p class="list-item" v-for="wish in user_info.wish_movie" :key="wish.id" @click="movieDetail(wish)">{{wish.title}}
+          <svg @click="deleteWish(wish)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+          </svg>
+        </p>
       </ul>
     </div>
 
@@ -46,7 +50,7 @@
       </svg>
       </div>
       <ul class="profile-ul" :class="{hide:review_btn_toggle}">
-        <p class="list-item" v-for="review in user_info.reviews" :key="review.id">{{review.title}}</p>
+        <p class="list-item" v-for="review in user_info.reviews" :key="review.id" @click="OnClick(review)">{{review.title}}</p>
       </ul>
     </div>
 
@@ -85,9 +89,41 @@ export default {
       wish_btn_toggle: true,
       review_btn_toggle: true,
       commet_btn_toggle: true,
+      wishMovieDetail: {},
     }
   },
   methods: {
+    OnClick(review) {
+      this.$router.push({name: 'ReviewDetail', query: {...review}})
+    },
+    movieDetail (wish) {
+      axios({
+        url: `https://api.themoviedb.org/3/search/movie?query=${wish.title}&api_key=8891da6c530f993ba51066b80edfa91d&language=ko-kr`,
+        method: 'GET',
+      })
+      .then((res) => {
+        console.log('보여줘', res.data.results[0])
+        this.wishMovieDetail = res.data.results[0]
+        console.log(this.wishMovieDetail)
+        console.log(`https://image.tmdb.org/t/p/w500${this.wishMovieDetail.poster_path}`)
+        this.$router.push({name: "MovieDetail", query: {...this.wishMovieDetail, poster_path:`https://image.tmdb.org/t/p/w500${this.wishMovieDetail.poster_path}`}})
+      })
+    },
+    deleteWish (wish) {
+      axios({url: `http://127.0.0.1:8000/accounts/${this.user_info.id}/wishmovie/${wish.id}/`,
+        method: "DELETE",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+        })
+        .then(() => {
+          alert(`위시리스트에서 ${wish.title}이(가) 삭제되었습니다!`)
+          // this.user_info.$forceUpdate();
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
     wish_detailToggle(){
       this.wish_btn_toggle = !this.wish_btn_toggle
     },
@@ -151,7 +187,7 @@ export default {
       // console.log('잘 들어온다',this.me)
     },
     getUserInfo(){
-      console.log(this.$route.query.userId)
+      // console.log(this.$route.query.userId)
       axios({
         url:`http://127.0.0.1:8000/accounts/${this.$route.query.userId}/`,
         method: 'GET',
@@ -159,7 +195,7 @@ export default {
           Authorization: `JWT ${localStorage.getItem('jwt')}`
         },
       }).then((res)=>{
-        console.log(res.data)
+        // console.log(res.data)
         this.user_info = res.data
         this.subscribe_cnt = _.size(this.user_info.subscriber)
 
@@ -169,6 +205,9 @@ export default {
 
     },
   },
+  // updated () {
+  //   this.getUserInfo()
+  // },
   computed:{
     // countSubscriber() {
     //   console.log('구독자 수 ',this.user_info.subscriber)
