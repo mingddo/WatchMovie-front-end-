@@ -13,7 +13,7 @@
                 <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
               </svg>
             </a>
-            <a @click="addWishMovie" class="dropdown-item d-flex justify-content-center" href="#">
+            <a @click="addWishMovie" class="dropdown-item d-flex justify-content-center" :class="{disabled : !this.canIwish}" href="#">
               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
               </svg>
@@ -167,6 +167,7 @@ export default {
       user: '',
       wishMovie: '',
       wishMovieId: '',
+      canIwish: true,
     };
   },
   name: "ReviewDetail",
@@ -188,7 +189,10 @@ export default {
         method: 'GET',
       })
       .then((res) => {
-        console.log(res.data.results[0])
+        console.log('뭐냠 ',res.data)
+        if (res.data.results.length == 0) {
+          alert('유효하지 않은 영화 제목입니다!')
+        }
         this.wishMovie = res.data.results[0].title
         this.wishMovieId = res.data.results[0].id
         this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
@@ -208,11 +212,17 @@ export default {
       }).then(()=>{
         // console.log('됏니?', res.data)
         alert(`위시리스트에 ${this.wishMovie}가 추가되었습니다`)
+        this.canIwish = false
+        })
+        .catch((err) => {
+          alert('이미 추가된 영화입니다!')
+          this.canIwish = false
+          console.log(err)
+      })
 
       })
-      })
       .catch((err) => {
-        console.error(err)
+        console.log(err)
       })
     },
     backtodetail(){
