@@ -128,16 +128,14 @@ export default {
       // this.inputMovie=''
       },
     gotoProfile() {
-      this.$router.push({ name: "Profile", query:{ userId: this.user.id}});
+      this.$router.push({ name: "Profile", query:{ userId: this.user.user_id}});
     },
     getUserName() {
       // console.log(VueJwtDecode.decode(localStorage.getItem('jwt')))
       this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
     },
-    setLogin(input) {
+    setLogin() {
       this.login = true;
-      this.user = input
-      console.log(this.user)
     },
     logout() {
       this.login = false;
