@@ -5,7 +5,7 @@
     <div class="recommend-box-content">
       <div class="embed-responsive embed-responsive-16by9" style="width: 800px; heigth: auto; margin: 0 auto" >
         
-      <iframe class="embed-responsive-item" allow="autoplay;" width="560" height="315" :src="`${recommendMovieData.video}?autoplay=1`" frameborder="0"></iframe>
+      <iframe class="embed-responsive-item" allow="autoplay;" width="560" height="315" :src="`${recommendMovieData.video}?autoplay=1&loop=1&autopause=0`" frameborder="0"></iframe>
       </div>
       <div class="recommend-text">
         <div class="rexommend-title gugi-font">
