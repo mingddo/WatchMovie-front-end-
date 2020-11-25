@@ -1,6 +1,8 @@
 <template>
   <div class="movie-list">
-    <div class="recommend-box">
+    <div class="movie-list-top"  :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`./${radomNum}.jpg`) + ')', 'background-repeat': 'no-repeat', 'background-size':'cover'}">
+    </div>
+    <div class="recommend-box" >
       <div class="inner">
         <Recommend :recommendMovieData="recommendMovieData" :user="user"/>
       </div>
@@ -89,10 +91,16 @@ export default {
       userWishes: [],
       recommendMovie: 0,
       recommendMovieData: {},
+      img:'https://www.10wallpaper.com/wallpaper/1366x768/1908/Naomi_Scott_2019_Aladdin_Princess_Jasmine_1366x768.jpg',
+      radomNum : '',
 
     };
   },
   methods: {
+    randomNumber(){
+      this.radomNum = _.random(1,3)
+      console.log(this.radomNum)
+    },
     closeDetail(){
       this.modal_toggle = false
     },
@@ -141,6 +149,7 @@ export default {
         },
       }).then((res)=>{
         console.log(res.data)
+        this.modal_toggle = false
       }).catch((err)=>{
         console.error(err)
       })
@@ -204,9 +213,18 @@ export default {
         .catch((err) => {
           console.error(err);
         });
+
+    },
+
+  },
+  computed:{
+    getImg(){
+      return './al.jpg'
+
     },
   },
   created() {
+    this.randomNumber()
     this.getUserName()
     this.get_nowplaying_list();
     this.get_popularmovies_list();
@@ -217,6 +235,20 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gugi&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;700;900&display=swap');
+.black-font{
+  font-family: 'Black Han Sans', sans-serif;
+}
+.gugi-font{
+  font-family: 'Gugi', cursive;
+}
+.nanum-gothic-font{
+font-family: 'Nanum Gothic', sans-serif;
+}
+.noto-font{
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 .left-text{
   text-align: left;
 }
@@ -236,6 +268,14 @@ export default {
   font-size: 1.063rem;
   z-index: 100;
   margin-right: 3rem;
+}
+.movie-list-top{
+  width: 100%;
+  height: 40rem;
+  color: black;
+  /* background-image: url(al.jpg) no-repeat center center fixed; */
+  background:linear-gradient( to bottom, rgba(0, 0, 0, 0), #ffffff);
+  background-size: cover;
 }
 .gradient{
   position: relative;
@@ -323,10 +363,10 @@ export default {
   display: none;
 }
 .movie-list {
-  padding: 30px 40px;
+  /* padding: 30px 40px; */
   text-align: center;
   color: white;
-  background-color: # #41292B;;;
+  background-color:#141414;
 }
 .movie-list .inner {
   width: 80%;
@@ -338,7 +378,7 @@ export default {
   width: 80%;
   height: auto;
   margin: auto;
-  background-color: #F7D949;
+  /* background-color: #F7D949; */
   color: #141414;
 }
 /* :style="{backgroundImage:'url('+selected_movie.poster_path+')', backgroundRepeat:background_repeat, backgroundSize: bgSize}" */
