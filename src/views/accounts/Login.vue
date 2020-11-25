@@ -66,12 +66,8 @@ export default {
 .bg {
 color: white;
 height: 100vh;
-background: url(bg.jpg) no-repeat center center fixed;
 min-height: 100%;
--webkit-background-size: cover;
--moz-background-size: cover;
--o-background-size: cover;
-background-size: cover;
+background-color: #141414;
 margin: 0;
 padding: 0;
 font-family: sans-serif;
