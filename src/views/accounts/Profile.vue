@@ -1,21 +1,68 @@
 <template>
-  <div class="container">
+  <div class="profile-main">
     <div class="jumbotron profile-frame">
-      <h1 class="display-4">{{ user_info.username }}</h1>
-      <p class="lead">여기는 프로필 페이지다. 아직 완성이 되지 않아따...........................</p>
-      <hr class="my-4">
-      <div v-show="(me.user_id != this.$route.query.userId)">
-        <button v-show="status" @click="cutUser" class="profile-btn">구독 취소</button>
-        <button v-show="!status" @click="pickUser" class="profile-btn">구독 하기</button>
+      <div class="userimg">
+        <img src="@/assets/user.jpg" alt="">
       </div>
-      <h2>구독자: {{subscribe_cnt}}</h2>
-      <h2>구독 중: {{countSubscribe}}</h2>
+
+      <div class="profile-content">
+        <div class="profile-name-box">
+          <h1 class="display-4 profile-content-title">{{ user_info.username }}</h1>
+
+        </div>
+        <div class="profile-subscribeInfo">
+          <p class="p-font">구독자: {{subscribe_cnt}}</p>
+          <p class="p-font">구독 중: {{countSubscribe}}</p>
+        </div>
+        <div class="profile-btn-frame" v-show="(me.user_id != this.$route.query.userId)">
+          <button v-show="status" @click="cutUser" class="profile-btn">구독 취소</button>
+          <button v-show="!status" @click="pickUser" class="profile-btn">구독 하기</button>
+      </div>
+      </div>
+      
     </div>
-    <div class="profile-frame">
-      <h1>Wish Movie</h1>
-      <ul>
-        <li class="wish-list" v-for="wish in user_info.wish_movie" :key="wish.id">{{wish.title}}</li>
+    <div class="profile-body">
+    <div class="profile-body-frame">
+      <div class="profile-title-frame">
+      <h1 class="profile-body-title">Wish Movie</h1>
+      <svg :class="{hide:!wish_btn_toggle}" @click="wish_detailToggle" width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+      <svg :class="{hide:wish_btn_toggle}"  @click="wish_detailToggle" width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+      </svg>
+      </div>
+      <ul class="profile-ul" :class="{hide:wish_btn_toggle}">
+        <li class="list-item" v-for="wish in user_info.wish_movie" :key="wish.id">{{wish.title}}</li>
       </ul>
+    </div>
+
+    <div class="profile-body-frame">
+            <div class="profile-title-frame">
+      <h1 class="profile-body-title">Review</h1>
+      <svg :class="{hide:!review_btn_toggle}" @click="review_detailToggle" width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+      <svg :class="{hide:review_btn_toggle}"  @click="review_detailToggle" width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+      </svg>
+      </div>
+      <ul class="profile-ul" :class="{hide:review_btn_toggle}">
+        <li class="list-item" v-for="review in user_info.reviews" :key="review.id">{{review.title}}</li>
+      </ul>
+    </div>
+
+    <div class="profile-body-frame">
+            <div class="profile-title-frame">
+      <h1 class="profile-body-title">Commet</h1>
+      <svg :class="{hide:!commet_btn_toggle}" @click="comment_detailToggle" width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+      <svg :class="{hide:commet_btn_toggle}"  @click="comment_detailToggle" width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+      </svg>
+      </div>
+      <ul class="profile-ul" :class="{hide:!commet_btn_toggle}">
+        <li class="list-item" v-for="cmt in user_info.comment" :key="cmt.id">{{cmt.content}}</li>
+      </ul>
+    </div>
     </div>
 
   </div>
@@ -35,9 +82,21 @@ export default {
       status: false,
       subscribe_cnt: '',
       subscriber_cnt: '',
+      wish_btn_toggle: true,
+      review_btn_toggle: true,
+      commet_btn_toggle: true,
     }
   },
   methods: {
+    wish_detailToggle(){
+      this.wish_btn_toggle = !this.wish_btn_toggle
+    },
+    review_detailToggle(){
+      this.review_btn_toggle = !this.review_btn_toggle
+    },
+    comment_detailToggle(){
+      this.commet_btn_toggle = !this.commet_btn_toggle
+    },
     cutUser(){
        axios({
         url:`http://127.0.0.1:8000/accounts/subscribe/${this.$route.query.userId}/`,
@@ -130,30 +189,136 @@ created() {
 </script>
 
 <style>
-.wish-list{
+.profile-title-frame{
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: space-between;
+  align-items: center;
+}
+.p-font{
+  font-size: 2rem;
+}
+.profile-main{
+  width: 60%;
+  height: 100%;
+  margin: auto;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: 400;
+}
+.profile-content{
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.profile-name-box{
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+.profile-content-title{
+  text-align: left;
+  font-weight: 700;
+}
+.profile-subscribeInfo{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.userimg{
+  width: 20%;
+  height: auto;
+  margin: 0;
+}
+.userimg img{
+  border-radius: 100px;
+  width: 100%;
+  height: 100%;
+}
+.profile-ul{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0;
+}
+.hide{
+  display: none;
+}
+.list-item{
   list-style: none;
-  font-size: 20px;
+  font-size: 1.5rem;
+  width: 100%;
+  height: 4rem;
+  border: 0.2rem solid rgb(54, 54, 54);
+  margin: 4px;
+  border-radius: 15px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .jumbotron{
-  background:rgb(39, 39, 38);
+  background:rgb(255, 255, 255, 0.1);
   border: none;
   color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.profile-body{
+  width: 100%;
+  height: auto;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.profile-body-frame{
+  width: 30%;
+  /* min-height: auto; */
+  min-height: 10rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: flex-start;
+  align-items: flex-start;
+
+}
+.profile-body-title{
+  margin-bottom: 1rem;
 }
 .profile-frame{
   width: 100%;
   height: 400px;
   margin: 30px auto;
 }
-.profile-btn{
-  width: 20%;
+.profile-btn-frame{
+  width: 100%;
   height: auto;
-  background: #1f0663;
-  border: 2px solid  #1f0663;
+}
+.profile-btn{
+  width: 100%;
+  height: auto;
+  background: #45269b;
+  border: none;
   color: white;
   padding: 5px;
-  font-size: 18px;
+  font-size: 1.7rem;
   cursor: pointer;
-  margin: 12px 20px;
+  margin: 0;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <div class="wallpaper" :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`@/assets/${radomNum}.jpg`) + ') '}">
+      <div class="wallpaper" :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`@/assets/${radomNum}.jpg`) + ')'}">
       </div>
       <div v-if="login">
         <span>
@@ -80,7 +80,6 @@
         <router-link to="/reviewlist">ReviewList</router-link> |
         <router-link to="/reviewform">ReviewForm</router-link> |
         <router-link to="/movielist">MovieList</router-link> |
-        <router-link to="/recommend">Recommend</router-link> |
         <router-link to="#" @click.native="logout">Logout</router-link>
       </div>
       <div v-else>
@@ -170,8 +169,8 @@ export default {
 .wallpaper{
   width: 100%;
   height: 40rem;
-  background-repeat: no-repeat;
-  /* background-size: cover; */
+  background-repeat: no-repeat !important ;
+  background-size: cover !important;
 }
 .profile-icon {
   width: 50px;
