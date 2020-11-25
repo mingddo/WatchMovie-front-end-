@@ -32,7 +32,7 @@
       </svg>
       </div>
       <ul class="profile-ul" :class="{hide:wish_btn_toggle}">
-        <li class="list-item" v-for="wish in user_info.wish_movie" :key="wish.id">{{wish.title}}</li>
+        <p class="list-item" v-for="wish in user_info.wish_movie" :key="wish.id">{{wish.title}}</p>
       </ul>
     </div>
 
@@ -46,7 +46,7 @@
       </svg>
       </div>
       <ul class="profile-ul" :class="{hide:review_btn_toggle}">
-        <li class="list-item" v-for="review in user_info.reviews" :key="review.id">{{review.title}}</li>
+        <p class="list-item" v-for="review in user_info.reviews" :key="review.id">{{review.title}}</p>
       </ul>
     </div>
 
@@ -59,8 +59,8 @@
         <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
       </svg>
       </div>
-      <ul class="profile-ul" :class="{hide:!commet_btn_toggle}">
-        <li class="list-item" v-for="cmt in user_info.comment" :key="cmt.id">{{cmt.content}}</li>
+      <ul class="profile-ul" :class="{hide:commet_btn_toggle}">
+        <p class="list-item" v-for="cmt in user_info.comment" :key="cmt.id">{{cmt.content}}</p>
       </ul>
     </div>
     </div>
@@ -202,7 +202,7 @@ created() {
 .profile-main{
   width: 60%;
   height: 100%;
-  margin: auto;
+  margin: 3rem auto;
   font-family: 'Nanum Gothic', sans-serif;
   font-weight: 400;
 }
@@ -253,16 +253,17 @@ created() {
 }
 .list-item{
   list-style: none;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   width: 100%;
   height: 4rem;
   border: 0.2rem solid rgb(54, 54, 54);
   margin: 4px;
+  padding: 0.5rem;
   border-radius: 15px;
   text-align: left;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: first baseline;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;

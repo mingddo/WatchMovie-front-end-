@@ -182,7 +182,9 @@ export default {
   display: block;
   transition-delay: 0.5s
 }
-
+html{
+  background-color: #141414;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
