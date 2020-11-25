@@ -3,8 +3,10 @@
     <h2 class="recommend">{{ user.username}} 님, </h2>
     <h2 class="recommend">이런 영화는 어떠신가요?</h2>
     <div class="recommend-box-content">
-      
-      <iframe allow="autoplay;" width="100%" height="315" :src="recommendMovieData.video" frameborder="0"></iframe>
+      <div class="embed-responsive embed-responsive-16by9" style="width: 800px; heigth: auto; margin: 0 auto" >
+        
+      <iframe class="embed-responsive-item" allow="autoplay;" width="560" height="315" :src="`${recommendMovieData.video}?autoplay=1`" frameborder="0"></iframe>
+      </div>
       <div class="recommend-text">
         <div class="rexommend-title gugi-font">
         <h2>{{recommendMovieData.title}}</h2>
@@ -26,7 +28,6 @@ export default {
     recommendMovieData: Object,
     user: Object,
   },
-
 }
 </script>
 
@@ -40,11 +41,13 @@ export default {
   margin: 0;
 }
 .recommend-box-content{
+  color: white;
   width: 100%;
   height: 80%;
   margin: auto;
 }
 .recommend-box-frame{
+  color:white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,7 +59,7 @@ export default {
   display: inline;
 }
 .recommend-text p{
-  border: nonepx;
+  border: none;
   font-size: 30px;
 }
 </style>
