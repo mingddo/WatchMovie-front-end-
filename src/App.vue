@@ -1,26 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <div class="wallpaper" :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`@/assets/${radomNum}.jpg`) + ')'}">
+
+      <div class="homelogo">
+        <img @click="gotoHome" src="@/assets/logo.png" alt="">
       </div>
-      <div v-if="login">
-        <span>
-          <svg
-            @click="gotoProfile"
-            width="1em"
-            height="1em"
-            viewBox="0 0 16 16"
-            class="bi bi-people-fill profile-icon"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"
-            />
-          </svg>
-        </span>
-        <div class="container">
+      <span v-show="login">
+        <div @click="gotoMovielist" class="nav-movie">Movie</div>
+        <div @click="gotoReview" class="nav-review">Review</div>
+        <div @click="logout" class="nav-logout">Logout</div>
+        <div @click="gotoProfile" class="profile-logo">
+          <img class="profile-logo-img" src="@/assets/user-1.png" alt="">
+        </div>
+        <div class="searchbar">
           <div class="input-group w-60" v-show="canIseen">
             <input
               type="text"
@@ -73,20 +64,20 @@
                 </svg>
               </button>
             </div>
-            
         </div>
-        <span>{{ user.username }} 님 안녕하세요</span>
-        <router-link to="/">Home</router-link> |
-        <router-link to="/reviewlist">ReviewList</router-link> |
-        <router-link to="/reviewform">ReviewForm</router-link> |
-        <router-link to="/movielist">MovieList</router-link> |
-        <router-link to="#" @click.native="logout">Logout</router-link>
+      </span>
+
+      <div id="nav">
+      <div class="wallpaper" :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`@/assets/${radomNum}.jpg`) + ')'}">
       </div>
-      <div v-else>
-        <router-link to="/">Home</router-link> |
+
+
+
+
+    <div v-show="!login">
         <router-link to="/signup">Signup</router-link> |
         <router-link to="/login">Login</router-link>
-      </div>
+      </div> 
     </div>
     <router-view @login="setLogin" :user="user" :key="$route.fullPath"/>
   </div>
@@ -137,6 +128,15 @@ export default {
     gotoProfile() {
       this.$router.push({ name: "Profile", query:{ userId: this.user.user_id}});
     },
+    gotoReview() {
+      this.$router.push({ name: "ReviewList"});
+    },
+    gotoMovielist(){
+      this.$router.push({ name: "MovieList"});
+    },
+    gotoHome(){
+       this.$router.push({ name: "Home"});
+    },
     getUserName() {
       // console.log(VueJwtDecode.decode(localStorage.getItem('jwt')))
       this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
@@ -166,11 +166,86 @@ export default {
 </script>
 
 <style>
+.searchbar{
+  position: absolute;
+  z-index: 99;
+  widows: 60%;
+  height: auto;
+  left: 650px;
+  top: 108px;
+}
+.nav-logout{
+  position: absolute;
+  left: 503px;
+  top: 97px;
+  height:  0em;
+  z-index: 90;
+  font-size: 2.1rem;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  color:#8504ee;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: 700;
+}
+.nav-movie{
+  position: absolute;
+  left: 265px;
+  top: 98px;
+  height:  0em;
+  z-index: 90;
+  font-size: 2.1rem;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  color: rgb(255, 0, 221);
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: 700;
+}
+.nav-review{
+  position: absolute;
+  top: 98px;
+  left: 380px;
+  height:  0em;
+  z-index: 90;
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Nanum Gothic', sans-serif;
+  color: rgb(255, 0, 221);
+  font-weight: 700;
+}
+
+.homelogo{
+  position: relative;
+  /* top: 1rem; */
+  z-index: 99;
+  width: 0.4rem;
+  height: 0rem;
+  margin: 0 3rem;
+  cursor: pointer;
+}
+.profile-logo{
+  position: absolute;
+  top: 70px;
+  right: 100px;
+  z-index: 99;
+  width: 4%;
+  height: auto;
+  cursor: pointer;
+}
+.profile-logo-img{
+  border-radius: 100px;
+  width: 100%;
+  height: auto;
+}
 .wallpaper{
   width: 100%;
   height: 40rem;
   background-repeat: no-repeat !important ;
   background-size: cover !important;
+  z-index: 30;
 }
 .profile-icon {
   width: 50px;
