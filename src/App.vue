@@ -136,6 +136,8 @@ export default {
     },
     setLogin() {
       this.login = true;
+      this.getUserName()
+
     },
     logout() {
       this.login = false;
