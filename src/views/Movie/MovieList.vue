@@ -1,7 +1,5 @@
 <template>
   <div class="movie-list">
-    <div class="movie-list-top"  :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`./${radomNum}.jpg`) + ')', 'background-repeat': 'no-repeat', 'background-size':'cover'}">
-    </div>
     <div class="recommend-box" >
       <div class="inner">
         <Recommend :recommendMovieData="recommendMovieData" :user="user"/>
@@ -17,7 +15,7 @@
     </div>
 
     <div class="inner">
-      <h1>Popular</h1>
+      <h1 class="nanum-gothic-font left-text">Popular</h1>
       <div >
         <Popular :popular_movies="popular_movies" @selectedmovie="selectedmovie" />
       </div>
@@ -25,7 +23,7 @@
     </div>
 
     <div class="inner">
-      <h1>Upcoming</h1>
+      <h1 class="nanum-gothic-font left-text">Upcoming</h1>
       <div>
         <Upcoming :upcomming_movies="upcomming_movies" @selectedmovie="selectedmovie" />
       </div>
@@ -80,8 +78,6 @@ export default {
   },
   data() {
     return {
-      background_repeat: "no-repeat",
-      bgSize: "cover",
       now_playing_movies: [],
       popular_movies: [],
       upcomming_movies: [],
@@ -91,8 +87,6 @@ export default {
       userWishes: [],
       recommendMovie: 0,
       recommendMovieData: {},
-      img:'https://www.10wallpaper.com/wallpaper/1366x768/1908/Naomi_Scott_2019_Aladdin_Princess_Jasmine_1366x768.jpg',
-      radomNum : '',
 
     };
   },
@@ -217,12 +211,7 @@ export default {
     },
 
   },
-  computed:{
-    getImg(){
-      return './al.jpg'
 
-    },
-  },
   created() {
     this.randomNumber()
     this.getUserName()
@@ -251,6 +240,8 @@ font-family: 'Nanum Gothic', sans-serif;
 
 .left-text{
   text-align: left;
+  font-weight: 700;
+  margin-bottom: 1.3rem;
 }
 .detail-title{
   font-size: 2rem;
@@ -272,10 +263,6 @@ font-family: 'Nanum Gothic', sans-serif;
 .movie-list-top{
   width: 100%;
   height: 40rem;
-  color: black;
-  /* background-image: url(al.jpg) no-repeat center center fixed; */
-  background:linear-gradient( to bottom, rgba(0, 0, 0, 0), #ffffff);
-  background-size: cover;
 }
 .gradient{
   position: relative;
@@ -334,7 +321,7 @@ font-family: 'Nanum Gothic', sans-serif;
   border-radius: 15px;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* object-fit: cover; */
 }
 .modal-box{
   background-color: black;

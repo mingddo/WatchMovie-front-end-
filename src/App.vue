@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
+      <div class="wallpaper" :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`@/assets/${radomNum}.jpg`) + ') '}">
+      </div>
       <div v-if="login">
         <span>
           <svg
@@ -87,16 +89,18 @@
         <router-link to="/login">Login</router-link>
       </div>
     </div>
-    <router-view @login="setLogin" :user="user"/>
+    <router-view @login="setLogin" :user="user" :key="$route.fullPath"/>
   </div>
 </template>
 
 <script>
 import VueJwtDecode from "vue-jwt-decode";
+import _ from 'lodash'
 import axios from 'axios'
 export default {
   data() {
     return {
+      radomNum : '',
       user: "",
       login: false,
       inputMovie: '',
@@ -105,6 +109,10 @@ export default {
     };
   },
   methods: {
+    randomNumber(){
+    this.radomNum = _.random(1,22)
+    console.log(this.radomNum)
+    },
     CanSee () {
       this.canIseen = true
       console.log("이제 보여", this.canIseen)
@@ -145,7 +153,11 @@ export default {
       this.$router.push("/login");
     },
   },
+  updated(){
+      this.randomNumber()
+  },
   created() {
+    this.randomNumber()
     if (localStorage.getItem("jwt")) {
       this.login = true;
       this.getUserName();
@@ -155,6 +167,12 @@ export default {
 </script>
 
 <style>
+.wallpaper{
+  width: 100%;
+  height: 40rem;
+  background-repeat: no-repeat;
+  /* background-size: cover; */
+}
 .profile-icon {
   width: 50px;
   height: auto;
@@ -171,11 +189,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
+  background-color: #141414;
+
 }
 
 #nav {
-  padding: 30px;
+  padding: 0;
 }
 
 #nav a {

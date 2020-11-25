@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="review-main">
     <h1>Review List</h1>
     <div class="container">
       <div class="review-nav d-flex">
@@ -10,7 +10,7 @@
           </button>
       
       </div>
-        
+      <div class="review-content">
       <table class="table">
         <thead>
           <tr>
@@ -30,6 +30,7 @@
       </table>
     </div>
     <ReviewForm @addReview="createReview" class="unvisibility" />
+    </div>
   </div>
 </template>
 
@@ -77,6 +78,16 @@ export default {
 </script>
 
 <style scoped>
+.review-content{
+  width: 80%;
+  height: auto;
+  margin: auto;
+}
+.review-main{
+  width: 100%;
+  height: auto;
+  margin: auto;
+}
   tr {
     border-bottom: 1px solid;
   }
