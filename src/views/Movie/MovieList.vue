@@ -36,7 +36,7 @@
     </div>
       <!-- <div class="gradient">그라데이션 그라데이션</div> -->
       <span class="detail-text">
-        <p class="detail-title gugi-font">{{selected_movie.title}}</p>
+        <p class="detail-title gugi-font" @click="movieDetail">{{selected_movie.title}}</p>
         <div>
 
         <p class="card-text">평점 : {{selected_movie.vote_average}}</p>
@@ -48,6 +48,13 @@
         <button class="detail-btn" @click="addWishMovie">wish_movie
           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
+        </button>
+        </div>
+        <div class="detail-btn-frame">
+        <button class="detail-btn" @click="deleteWishMovie">delete_movie
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
           </svg>
         </button>
         </div>
@@ -87,10 +94,15 @@ export default {
       userWishes: [],
       recommendMovie: 0,
       recommendMovieData: {},
+      canIwish: true,
 
     };
   },
   methods: {
+    movieDetail () {
+      console.log(this.selected_movie)
+      this.$router.push({name: "MovieDetail", query: {...this.selected_movie}})
+    },
     randomNumber(){
       this.radomNum = _.random(1,3)
       console.log(this.radomNum)
@@ -130,6 +142,25 @@ export default {
       })
       })
     },
+    deleteWishMovie() {
+      axios({url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/${this.selected_movie.id}/`,
+        method: "DELETE",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+        })
+        .then(() => {
+          alert(`위시리스트에서 ${this.selected_movie.title}이(가) 삭제되었습니다!`)
+          this.modal_toggle = false
+          this.canIwish = true
+        })
+        .catch((err) => {
+          console.error(err)
+          alert('위시리스트에 존재하지 않습니다.')
+          this.canIwish = true
+        })
+        
+    },
     addWishMovie(){
       axios({
         url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/`,
@@ -142,11 +173,15 @@ export default {
           Authorization: `JWT ${localStorage.getItem("jwt")}`,
         },
       }).then((res)=>{
-        console.log(res.data)
+        console.log('얘가 뭐야', res.data.title)
+        alert(`위시리스트에 ${res.data.title} 이(가) 추가되었습니다`)
         this.modal_toggle = false
+        this.canIwish = false
       }).catch((err)=>{
         console.error(err)
-      })
+        alert('이미 추가된 영화입니다!')
+        this.canIwish = false
+    })
     },
     getUserName() {
     // console.log(VueJwtDecode.decode(localStorage.getItem('jwt')))
@@ -368,6 +403,9 @@ font-family: 'Nanum Gothic', sans-serif;
   margin: 3rem auto;
   /* background-color: #F7D949; */
   color: #141414;
+}
+.button-gray{
+  background-color: gray;
 }
 /* :style="{backgroundImage:'url('+selected_movie.poster_path+')', backgroundRepeat:background_repeat, backgroundSize: bgSize}" */
 </style>

@@ -10,6 +10,7 @@ import ReviewForm from '../views/community/ReviewForm.vue'
 import MovieList from '../views/Movie/MovieList.vue'
 import SearchList from '../views/Movie/SearchList.vue'
 import Recommend from '../views/Recommendation/Recommend.vue'
+import MovieDetail from'../views/Movie/MovieDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -65,6 +66,11 @@ const routes = [
     path: '/recommend',
     name: 'Recommend',
     component: Recommend
+  },
+  {
+    path: '/moviedetail',
+    name: 'MovieDetail',
+    component: MovieDetail
   },
 ]
 

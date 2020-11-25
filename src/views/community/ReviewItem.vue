@@ -12,7 +12,9 @@
         </svg>
       </button>
     </td>
-    <td class="">{{review.created_at}}</td>
+    <td>
+      {{review.created_at}}
+    </td>
   </tr>
 </template>
 
