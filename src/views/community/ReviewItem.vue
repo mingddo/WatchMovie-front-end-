@@ -2,15 +2,10 @@
   <tr class="white-text">
     <td>{{ review.id }}</td>
     <td> <p class="title-click" @click="OnClick"> {{ review.title }} </p></td>
-    <td class="title-click" @click="OnSearch" :title="searchTitle"><p>{{ review.movie_title }}</p></td>
+    <td class="title-click" @click="movieDetail" :title="searchTitle"><p>{{ review.movie_title }}</p></td>
     <td> {{starRank}}</td>
-    <td class="title-click">
-      <button type="button" class="btn btn-link" title="프로필로 이동" @click="OnclickUser">
-        <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-square color-purple" fill="lightgray" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-          <path fill-rule="evenodd" d="M2 15v-1c0-1 1-4 6-4s6 3 6 4v1H2zm6-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-        </svg>
-      </button>
+    <td class="title-click" @click="OnclickUser">
+      <p>{{ this.user }}</p>
     </td>
     <td>
       {{review.created_at}}
@@ -25,6 +20,8 @@ export default {
     return {
       starRating : '',
       searchTitle: `${this.review.movie_title} 네이버에 검색하기`,
+      Movie: {},
+      user : '',
     }
   },
   props: {
@@ -32,6 +29,42 @@ export default {
     idx: Number,
   },
   methods: {
+    getUsername () {
+      axios({
+        url: `http://127.0.0.1:8000/accounts/${this.review.user}/`,
+        method: 'GET',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.user = res.data.username
+      })
+    },
+    movieDetail () {
+      axios({
+        url: `https://api.themoviedb.org/3/search/movie?query=${this.review.movie_title}&api_key=8891da6c530f993ba51066b80edfa91d&language=ko-kr`,
+        method: 'GET',
+      })
+      .then((res) => {
+        let found = false
+        for (const result of res.data.results) {
+          console.log('결과는?', result)
+          if (this.review.movie_title === result.title) {
+            this.Movie = result
+            found = true
+            console.log('찾았다!', found)
+            break
+          }
+          if (!found) {
+            this.Movie = res.data.results[0]
+          }
+        } 
+        console.log(res.data.results)
+        this.$router.push({name: "MovieDetail", query: {...this.Movie, poster_path:`https://image.tmdb.org/t/p/w500${this.Movie.poster_path}`}})
+      })
+    },
     OnSearch () {
       console.log(this.review)
       const keyword = this.review.movie_title
@@ -53,6 +86,9 @@ export default {
     OnClick() {
       this.$router.push({name: 'ReviewDetail', query: {...this.review}})
     },
+  },
+  created () {
+    this.getUsername();
   },
     computed : {
     starRank () {

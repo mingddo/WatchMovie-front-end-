@@ -34,7 +34,7 @@
             <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
           </svg>
         </button>
-        <button class="review-detail-search-btn">
+        <button class="review-detail-search-btn" @click="searchMovie">
           search_movie
           <svg width="1em"
               height="1em"
@@ -96,6 +96,7 @@
 </template>
 
 <script>
+import VueJwtDecode from "vue-jwt-decode";
 import axios from 'axios'
 export default {
   name: "MovieDetail",
@@ -105,9 +106,68 @@ export default {
       IsReview: false,
       reviewCount: 0,
       rank : 1,
+      user: '',
+      searchMovieobject : {},
     }
   },
   methods: {
+    searchMovie() {
+      const keyword = this.$route.query.title
+      axios.get(`http://127.0.0.1:8000/movies/search/${keyword}/`, )
+      .then((res) => {
+        console.log(res.data)
+
+        this.searchMovieobject = res.data
+        console.log(this.searchMovieobject)
+        this.$router.push({ name: "SearchList", query: { searchMovie: this.searchMovieobject, inputMovie : this.$route.query.title }, });
+        // console.log("이제 안보여", this.canIseen)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+      // this.inputMovie=''
+      },
+    deleteWishMovie() {
+      this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
+      axios({url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/${this.$route.query.id}/`,
+        method: "DELETE",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+        })
+        .then(() => {
+          alert(`위시리스트에서 ${this.$route.query.title}이(가) 삭제되었습니다!`)
+        })
+        .catch((err) => {
+          console.error(err)
+          alert('위시리스트에 존재하지 않습니다.')
+        })
+        
+    },
+    addWishMovie(){
+      this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
+      console.log('현재 유저', this.user)
+      console.log('현재 정보', this.$route.query)
+      axios({
+        url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/`,
+        method: "POST",
+        data:{
+          title: this.$route.query.title,
+          num: this.$route.query.id,
+        },
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      }).then(()=>{
+        // console.log('됏니?', res.data)
+        alert(`위시리스트에 ${this.$route.query.title} 이(가 추가되었습니다`)
+        })
+        .catch((err) => {
+          alert('이미 추가된 영화입니다!')
+          console.log(err)
+      })
+    },
     goToNew () {
       console.log(this.$route.query.title)
       this.$router.push({name: 'ReviewForm', query:{movietitle : this.$route.query.title}})
@@ -145,21 +205,6 @@ export default {
   created () {
     this.getReviews();
     this.calculateRank();
-  },
-  computed : {
-    // starRank () {
-    //   if (review.rank == 1) {
-    //     return '⭐' 
-    //   } else if (review.rank == 2) {
-    //     return '⭐⭐'
-    //   } else if (review.rank == 3) {
-    //     return '⭐⭐⭐'
-    //   } else if (review.rank == 4) {
-    //     return '⭐⭐⭐⭐'
-    //   } else {
-    //     return '⭐⭐⭐⭐⭐'
-    //   }
-    // },
   },
     beforeRouteLeave (to, from, next) {
       this.IsReview = false

@@ -1,7 +1,8 @@
 <template>
   <div class="recommend-box-frame">
     <div class="recommed-username">
-      <p class="recommend">{{ user.username }}님, 이런 영화는 어떠신가요?</p>
+      <p v-if="originalMovie" class="recommend">{{ user.username }}님의 선택, <br> " {{originalMovie}} " 과(와) 유사한 이 영화는 어떠세요? </p>
+      <p v-else class="recommend">{{ user.username }}님, 이 영화는 어떠세요? </p>
     </div>
 
     <div class="recommend-video embed-responsive embed-responsive-16by9">
@@ -17,7 +18,9 @@
     <div class="recommend-box-content">
       <div class="recommend-text">
         <div class="rexommend-title gugi-font">
-          <h2>{{ recommendMovieData.title }}</h2>
+          <div @click="movieDetail" class="text-animation">
+            <h2 class="text-animation">{{ recommendMovieData.title }}</h2>
+          </div>
           <div class="video-sign">
             <div v-if="recommendMovieData.adult" title="미성년관람불가">🔞</div>
             <div v-else title="미성년관람가능">⭕</div>
@@ -35,9 +38,15 @@
 <script>
 export default {
   props: {
+    originalMovie: String,
     recommendMovieData: Object,
     user: Object,
   },
+  methods :{
+    movieDetail () {
+      this.$router.push({name: "MovieDetail", query: {...this.recommendMovieData}})
+    },
+  }
 };
 </script>
 
