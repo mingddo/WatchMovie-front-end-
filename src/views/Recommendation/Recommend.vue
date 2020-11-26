@@ -1,8 +1,8 @@
 <template>
   <div class="recommend-box-frame">
     <div class="recommed-username">
-      <p v-if="originalMovie" class="recommend">{{ user.username }}님의 선택, <br> " {{originalMovie}} " 과(와) 유사한 이 영화는 어떠세요? </p>
-      <p v-else class="recommend">{{ user.username }}님, 이 영화는 어떠세요? </p>
+      <p v-if="originalMovie" class="recommend animate__animated animate__fadeIn">{{ user.username }}님의 선택, <br> " {{originalMovie}} " 과(와) 유사한 이 영화는 어떠세요? </p>
+      <p v-else class="recommend animate__animated animate__fadeIn">{{ user.username }}님, 이 영화는 어떠세요? </p>
     </div>
 
     <div class="recommend-video embed-responsive embed-responsive-16by9">
@@ -51,6 +51,9 @@ export default {
 </script>
 
 <style>
+.animate__animated.animate__fadeIn {
+  --animate-duration: 3s;
+}
 .rexommend-text {
   width: 100%;
   margin: auto;

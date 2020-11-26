@@ -68,7 +68,7 @@
       </span>
 
       <div id="nav">
-      <div class="wallpaper" :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`@/assets/${radomNum}.jpg`) + ')'}">
+      <div class="wallpaper animate__animated animate__fadeIn" :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`@/assets/${radomNum}.jpg`) + ')'}">
       
       </div>
 
@@ -169,6 +169,9 @@ export default {
 </script>
 
 <style>
+.animate__animated.animate__fadeIn {
+  --animate-duration: 3s;
+}
 .none-visible{
   display: none;
 }
