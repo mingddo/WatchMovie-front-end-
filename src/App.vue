@@ -71,7 +71,7 @@
       <div class="wallpaper" :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`@/assets/${radomNum}.jpg`) + ')'}">
       </div>
 
-
+      <Home class="none-visible" :user="user"/>
 
 
     <div v-show="!login">
@@ -87,7 +87,9 @@
 import VueJwtDecode from "vue-jwt-decode";
 import _ from 'lodash'
 import axios from 'axios'
+import Home from './views/Home.vue';
 export default {
+  components: { Home },
   data() {
     return {
       radomNum : '',
@@ -117,7 +119,7 @@ export default {
         console.log(this.searchMovie)
         this.$router.push({ name: "SearchList", query: { searchMovie: this.searchMovie, inputMovie : this.inputMovie }, });
         this.canIseen = false
-        console.log("이제 안보여", this.canIseen)
+        // console.log("이제 안보여", this.canIseen)
       })
       .catch((err) => {
         console.log(err)
@@ -149,7 +151,7 @@ export default {
     logout() {
       this.login = false;
       localStorage.removeItem("jwt");
-      this.$router.push("/login");
+      this.$router.push({ name: "Home"});
     },
   },
   updated(){
@@ -166,6 +168,9 @@ export default {
 </script>
 
 <style>
+.none-visible{
+  display: none;
+}
 .searchbar{
   position: absolute;
   z-index: 99;
