@@ -8,6 +8,11 @@
       <div class="review-content">
         <div class="review-title-group">
             <p class="review-detail-movie-title">{{this.$route.query.title}}</p>
+            <div class="d-flex">장르 |
+              <div style="margin-left:0.3em;" v-for="(genre, idx) in this.genre_name" :key="idx">
+               {{genre}} |
+              </div>
+            </div>
             <h5><i>{{this.$route.query.release_date}}</i></h5>
         </div>
         <div>
@@ -111,9 +116,21 @@ export default {
       rank : 1,
       user: '',
       searchMovieobject : {},
+      genre_id : [],
+      genre_name: [],
     }
   },
   methods: {
+    getGenre () {
+      for (const genid of this.$route.query.genres) {
+        axios.get(`http://127.0.0.1:8000/movies/genres/${genid}/`, )
+        .then((res) => {
+          console.log('장르이름', res)
+          this.genre_name.push(res.data.name)
+        })
+        console.log('진짜 장르', this.genre_name)
+      }
+    },
     searchMovie() {
       const keyword = this.$route.query.title
       axios.get(`http://127.0.0.1:8000/movies/search/${keyword}/`, )
@@ -208,6 +225,7 @@ export default {
   created () {
     this.getReviews();
     this.calculateRank();
+    this.getGenre();
   },
     beforeRouteLeave (to, from, next) {
       this.IsReview = false

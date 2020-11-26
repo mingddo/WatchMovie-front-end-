@@ -141,7 +141,7 @@ export default {
       }).then((res) => {
         // console.log('보여쥬ㅓ!!',res)
         this.recommendMovieData = res.data
-        // console.log('추천영화', this.recommendMovieData)
+        console.log('추천영화', this.recommendMovieData)
       })
       })
     },

@@ -62,7 +62,7 @@ export default {
           }
         } 
         console.log(res.data.results)
-        this.$router.push({name: "MovieDetail", query: {...this.Movie, poster_path:`https://image.tmdb.org/t/p/w500${this.Movie.poster_path}`}})
+        this.$router.push({name: "MovieDetail", query: {...this.Movie, poster_path:`https://image.tmdb.org/t/p/w500${this.Movie.poster_path}`, genres: this.Movie.genre_ids,}})
       })
     },
     OnSearch () {
