@@ -151,9 +151,14 @@ export default {
       this.$router.push({ name: "Home"});
     },
   },
-  updated(){
+  watch:{
+    $route(){
       this.randomNumber()
+    }
   },
+  // updated(){
+  //     this.randomNumber()
+  // },
   created() {
     this.randomNumber()
     if (localStorage.getItem("jwt")) {
