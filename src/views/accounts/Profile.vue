@@ -32,12 +32,14 @@
       </svg>
       </div>
       <ul class="profile-ul" :class="{hide:wish_btn_toggle}">
-        <span><p class="list-item " v-for="wish in user_info.wish_movie" :key="wish.id" :wish="wish" @click="movieDetail(wish)">{{wish.title}}</p></span>
-        <span>
-          <svg @click="deleteWish(wish)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill delete-button-locate button-animation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <span class="list-item locate" v-for="wish in user_info.wish_movie" :key="wish.id" :wish="wish"  >
+          <p style="margin:0" @click="movieDetail(wish)">{{wish.title}}
+            </p>
+            <svg @click="deleteWish(wish)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill delete-button-locate button-animation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
             </svg>
-        </span>
+          
+          </span>
       </ul>
     </div>
 
@@ -429,5 +431,10 @@ created() {
 .button-animation :hover {
   cursor: pointer;
   transform: translateX(1px);
+}
+.locate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
