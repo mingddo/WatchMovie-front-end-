@@ -74,11 +74,7 @@
 
       <Home class="none-visible" :user="user"/>
 
-
-    <div v-show="!login">
-        <router-link to="/signup">Signup</router-link> |
-        <router-link to="/login">Login</router-link>
-      </div> 
+ 
     </div>
     <router-view @login="setLogin" :user="user" :key="$route.fullPath"/>
   </div>

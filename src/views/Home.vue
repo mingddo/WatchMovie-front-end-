@@ -4,7 +4,7 @@
       <div v-show="!login" class="first-bolck-logout">
         <div class="right-box">
           <div class="first-box-body">
-            <p class="right-singup">W</p>
+
             <p class="first-content">아직 회원이 아니신가요?</p>
           </div>
           <button @click="gotosignup" class="home-signup-btn">
@@ -14,7 +14,7 @@
         </div>
         <div class="left-box">
           <div class="first-box-body">
-            <p class="left-login">M</p>
+
             <p class="first-content">이미 회원이신가요?</p>
           </div>
           <button @click="gotologin" class="home-login-btn">
