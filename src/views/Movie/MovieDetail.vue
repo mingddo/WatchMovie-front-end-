@@ -1,7 +1,7 @@
 <template>
 
   <div class="review-detal-page">
-    <div class="review-detail-body">
+    <div class="review-detail-body" v-if="this.$route.query.title">
       <div class="review-poster">
         <img :src="this.$route.query.poster_path" class="posterimg" alt="...">
       </div>
@@ -50,6 +50,9 @@
       </div>
 
       
+    </div>
+    <div v-else>
+      <h1>존재하지 않는 영화입니다 </h1>
     </div>
     <hr>
     <div class="container" v-if="IsReview">
