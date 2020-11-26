@@ -63,8 +63,8 @@
         </div>
       </div>
       <div class="review-contents-all">
-        <div class="review-content">
-          <p class="nanum-gothic-font" v-html="contentHaveIndentation"></p>
+        <div>
+          <p style="text-align:left;" class="nanum-gothic-font" v-html="contentHaveIndentation"></p>
         </div>
         <div class="review-created-at">
           <i>작성일자: {{ created_at }}</i><br>
