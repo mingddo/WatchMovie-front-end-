@@ -69,6 +69,7 @@
 
       <div id="nav">
       <div class="wallpaper" :style="{'background': 'linear-gradient( to bottom, rgba(0, 0, 0, 0), #141414), url(' +require(`@/assets/${radomNum}.jpg`) + ')'}">
+      
       </div>
 
       <Home class="none-visible" :user="user"/>
@@ -250,7 +251,7 @@ export default {
   height: 40rem;
   background-repeat: no-repeat !important ;
   background-size: cover !important;
-  z-index: 30;
+  z-index: 2;
 }
 .profile-icon {
   width: 50px;
@@ -272,6 +273,10 @@ html{
   text-align: center;
   color: white;
   background-color: #141414;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
 
 }
 

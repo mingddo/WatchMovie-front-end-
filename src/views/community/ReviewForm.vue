@@ -1,5 +1,9 @@
 <template>
-  <div class="review-place bg-gray">
+  <div class="review-place">
+    <div class="review-page-title-form">
+
+      <p class="review-page-title">Review 작성</p>
+    </div>
     <form class="review-form review-movietitle" @submit="addReview">
       <div class="movietitle-input">
         <input title="영화명" value="{this.$route.query.movietitle}" placeholder="영화명을 입력해주세요" type="text" id="movietitle" class="form-control" v-model.trim="movietitle" aria-describedby="passwordHelpBlock">
@@ -100,18 +104,32 @@ export default {
 </script>
 
 <style>
-.movie-title-input {
-  
+.review-page-title{
+  font-size: 3rem;
+  text-align: left;
+  width: 100%;
+}
+.review-page-title-form{
+  width: 60%;
+  margin: 3rem auto;
 }
 .review-form{
+    border-radius: 10px;
   width: 60%;
   height: auto;
   margin-left: auto;
   margin-right: auto;
+  background-color: rgba(0, 0, 0, 0.3);
+    color: white;
 
 }
 .review-place{
   margin: auto;
+  position: absolute;
+  top: 250px;
+  align-self: center;
+  width: 85%;
+  height: 100%;
 }
 /* textarea {
   width: 100%;

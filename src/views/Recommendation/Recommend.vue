@@ -57,7 +57,7 @@ export default {
   height: 5.4em;
 }
 .recommend-video {
-  width: 100%;
+  width: 70%;
   height: auto;
   margin-bottom: 2rem;
 }
@@ -95,10 +95,13 @@ export default {
   height: auto;
   margin: 0;
   padding: 0.5rem;
+  text-align: left;
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: 700;
 }
 .recommend-box-content {
   color: white;
-  width: 100%;
+  width: 80%;
   height: 80%;
   margin: 0 auto;
 }

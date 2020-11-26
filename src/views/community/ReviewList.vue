@@ -1,7 +1,9 @@
 <template>
   <div class="review-main">
-    <h1>Review List</h1>
-    <div class="container">
+    <div class="container" style="text-align:left;">
+      <p class="review-h1">Review List</p>
+    </div>
+    <div class="container" style="padding: 0"> 
       <div class="review-content review-movietitle">
         <div class="review-nav d-flex">
           <button class="btn btn-link" @click="goToNew" title="새글 작성">
@@ -103,6 +105,16 @@ export default {
 </script>
 
 <style scoped>
+.review-h1{
+  font-size: 3rem;
+  padding: 1.5rem 2.5rem;
+}
+.reviewlist-title{
+  width: 90%;
+  height: auto;
+  margin: auto;
+  text-align: left;
+}
 .review-content{
   padding-top:30px;
   width: 90%;
@@ -113,6 +125,8 @@ export default {
   width: 100%;
   height: auto;
   margin: auto;
+  position: absolute;
+  top: 300px;
 }
   tr {
     border-bottom: 1px solid;

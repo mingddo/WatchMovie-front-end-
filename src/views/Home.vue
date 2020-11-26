@@ -64,10 +64,12 @@ export default {
 .home {
   width: 100%;
   height: 100%;
+  position: absolute;
+  top: 300px;
 }
 
 .first-content{
-  font-size: 3.3rem;
+  font-size: 2.8rem;
 }
 .first-bolck-logout {
   width: 100%;
