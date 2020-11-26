@@ -1,24 +1,55 @@
 <template>
-  <div>
-    <div class="container d-flex justify-content-center">
-      <div class="card review-movietitle" style="width: 40rem;">
-        <img :src="this.$route.query.poster_path" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h1 class="card-title">{{this.$route.query.title}}</h1>
-          <h5><i>{{this.$route.query.release_date}}</i></h5>
+
+  <div class="review-detal-page">
+    <div class="review-detail-body">
+      <div class="review-poster">
+        <img :src="this.$route.query.poster_path" class="posterimg" alt="...">
+      </div>
+      <div class="review-content">
+        <div class="review-title-group">
+            <p class="review-detail-movie-title">{{this.$route.query.title}}</p>
+            <h5><i>{{this.$route.query.release_date}}</i></h5>
+        </div>
+        <div>
           <div>
-            <div>
-              ⭐평점
-            </div>
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" :style="`width: ${this.rank}%`" :aria-valuenow="this.$route.query.vote_average" aria-valuemin="0" aria-valuemax="10"></div>
-            </div>
+            ⭐평점
           </div>
-          <hr>
-          <p class="card-text">{{this.$route.query.overview}}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" :style="`width: ${this.rank}%`" :aria-valuenow="this.$route.query.vote_average" aria-valuemin="0" aria-valuemax="10"></div>
+          </div>
+        </div>
+            <hr>
+        <div>
+          <p class="detail-overview">{{this.$route.query.overview}}</p>
+        </div>
+        <div class="review-detail-btn">
+          <button class="review-btn" @click="addWishMovie">wish_movie
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+            </svg>
+        </button>
+
+        <button class="review-btn" @click="deleteWishMovie">delete_movie
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+          </svg>
+        </button>
+        <button class="review-detail-search-btn">
+          search_movie
+          <svg width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              class="bi bi-search"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                  <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+          </svg>
+        </button>
         </div>
       </div>
+
+      
     </div>
     <hr>
     <div class="container" v-if="IsReview">
@@ -59,10 +90,9 @@
     <div v-else>
       <h2>아직 작성된 리뷰가 없어요!</h2>
       <br>
-      <button type="button" class="btn btn-secondary" @click="goToNew">리뷰 작성하러 가기</button>
+      <button type="button" class="goto-search-btn" @click="goToNew">리뷰 작성하러 가기</button>
     </div>
-  
-</div>
+  </div>
 </template>
 
 <script>
@@ -139,5 +169,87 @@ export default {
 </script>
 
 <style>
+.review-title-group{
+  width: 100%;
+  text-align: left;
 
+}
+.review-detail-btn{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.review-detail-movie-title{
+  font-size: 2rem;
+  text-align: left;
+  font-family: 'Gugi', cursive;
+}
+.review-btn {
+  width: 25%;
+  border: none;
+  border-radius: 15px;
+  height: 3rem;
+  background-color: #f3ef07;
+  color: black;
+  font-size: 1rem;
+}
+.review-detail-search-btn {
+  width: 25%;
+  border: none;
+  border-radius: 15px;
+  height: 3rem;
+  background-color: #341eb3;
+  color: white;
+  font-size: 1rem;
+}
+.goto-search-btn{
+  width: 70%;
+  border: none;
+  border-radius: 15px;
+  height: 3rem;
+  background-color: #c703ce;
+  color: white;
+  font-size: 1.5rem;
+}
+.review-content{
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
+  margin: 0 2rem;
+}
+.review-detal-page{
+  width: 80%;
+  height: auto;
+  margin: auto;
+  padding: 3rem 0;
+  position:absolute;
+  top: 250px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.review-poster{
+  width: 30%;
+  height: auto;
+
+}
+.posterimg{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.review-detail-body{
+  display: flex;
+
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 60%;
+  margin: auto;
+}
 </style>
