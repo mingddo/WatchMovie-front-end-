@@ -2,7 +2,7 @@
   <div class="movie-list">
     <div class="recommend-box" >
       <div class="inner">
-        <Recommend :recommendMovieData="recommendMovieData" :user="user"/>
+        <Recommend :recommendMovieData="recommendMovieData" :user="user" :originalMovie="originalMovie"/>
       </div>
     </div>
 
@@ -36,7 +36,9 @@
     </div>
       <!-- <div class="gradient">그라데이션 그라데이션</div> -->
       <span class="detail-text">
-        <p class="detail-title gugi-font" @click="movieDetail">{{selected_movie.title}}</p>
+        <div class="text-animation">
+        <p class="detail-title gugi-font text-animation" @click="movieDetail">{{selected_movie.title}}</p>
+        </div>
         <div>
 
         <p class="card-text">평점 : {{selected_movie.vote_average}}</p>
@@ -95,7 +97,7 @@ export default {
       recommendMovie: 0,
       recommendMovieData: {},
       canIwish: true,
-
+      originalMovie: '',
     };
   },
   methods: {
@@ -124,6 +126,7 @@ export default {
         const randomIndex = _.random(this.userWishes.length - 1)
         // console.log("보여주세요!", randomIndex)
         this.recommendMovie = this.userWishes[randomIndex].num
+        this.originalMovie = this.userWishes[randomIndex].title
         } else {
           this.recommendMovie = '420817'
         }

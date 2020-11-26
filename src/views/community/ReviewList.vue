@@ -81,7 +81,7 @@ export default {
         Authorization: `JWT ${localStorage.getItem('jwt')}`
       },
     }).then((res)=>{
-      // console.log(res.data)
+      console.log(res.data)
       this.reviews = res.data
       const count = this.reviews.length
       this.pages = Math.ceil(count/10)

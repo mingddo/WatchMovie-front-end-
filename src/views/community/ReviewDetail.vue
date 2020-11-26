@@ -22,13 +22,22 @@
         </div>
 
         <h6>{{ starRank }}</h6>
+        <div class="d-flex">
+          <button type="button" class="btn btn-link" title="프로필로 이동" @click="goProfile">
+            <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-square color-purple" fill="lightgray" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+              <path fill-rule="evenodd" d="M2 15v-1c0-1 1-4 6-4s6 3 6 4v1H2zm6-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg>
+          </button>
+          <p>{{reviewUsername}}</p>
+        </div>
       </div>
       <hr>
       <div>
         <div class="review-title">
           <h3 class="nanum-gothic-font"><b>{{ title }}</b></h3>
         </div>
-        <div class="review-U-D">
+        <div class="review-U-D" v-if="this.nowUser == this.reviewUser">
           <div class="btn-group purple" title="수정 및 삭제">
             <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split color-lightgray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-justify" fill="lightgray" xmlns="http://www.w3.org/2000/svg">
@@ -160,10 +169,34 @@ export default {
       wishMovie: '',
       wishMovieId: '',
       canIwish: true,
+      nowUser: '',
+      reviewUser: '',
+      reviewUsername: '',
     };
   },
   name: "ReviewDetail",
   methods: {
+    goProfile () {
+      this.$router.push({name: 'Profile', query:{ userId: this.reviewUser }})
+    },
+    getUsername () {
+      axios({
+        url: `http://127.0.0.1:8000/accounts/${this.reviewUser}/`,
+        method: 'GET',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.reviewUsername = res.data.username
+      })
+    },
+    getNowUser () {
+      this.nowUser = VueJwtDecode.decode(localStorage.getItem("jwt")).user_id
+      console.log('넌 뭐니',this.reviewUser)
+      console.log('넌 뭐니',this.nowUser)
+    },
     searchThisMovie () {
       const keyword = this.movietitle
       axios.get(`http://127.0.0.1:8000/movies/search/${keyword}/`, )
@@ -175,6 +208,29 @@ export default {
         console.log(err)
       })
     },
+    movieDetail (wish) {
+      axios({
+        url: `https://api.themoviedb.org/3/search/movie?query=${wish.title}&api_key=8891da6c530f993ba51066b80edfa91d&language=ko-kr`,
+        method: 'GET',
+      })
+      .then((res) => {
+        let found = false
+        for (const result of res.data.results) {
+          console.log('결과는?', result)
+          if (wish.title === result.title) {
+            this.wishMovieDetail = result
+            found = true
+            console.log('찾았다!', found)
+            break
+          }
+          if (!found) {
+            this.wishMovieDetail = res.data.results[0]
+          }
+        } 
+        console.log(res.data.results)
+        this.$router.push({name: "MovieDetail", query: {...this.wishMovieDetail, poster_path:`https://image.tmdb.org/t/p/w500${this.wishMovieDetail.poster_path}`}})
+      })
+    },
     addWishMovie(){
       axios({
         url: `https://api.themoviedb.org/3/search/movie?query=${this.movietitle}&api_key=8891da6c530f993ba51066b80edfa91d&language=ko-kr`,
@@ -184,34 +240,43 @@ export default {
         console.log('뭐냠 ',res.data)
         if (res.data.results.length == 0) {
           alert('유효하지 않은 영화 제목입니다!')
+        } else {
+          let found = false
+          for (const result of res.data.results) {
+            if (this.movietitle === result.title) {
+              this.wishMovie = result.title
+              this.wishMovieId = result.id
+              found = true
+              break
+          }
+          if (!found) {
+            this.wishMovie = res.data.results[0].title
+            this.wishMovieId = res.data.results[0].id
+          }
         }
-        this.wishMovie = res.data.results[0].title
-        this.wishMovieId = res.data.results[0].id
-        this.user = VueJwtDecode.decode(localStorage.getItem("jwt"));
-        // console.log('유저는', this.user)
-        // console.log(this.wishMovie)
-        // console.log(this.wishMovieId)
-        axios({
-        url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/`,
-        method: "POST",
-        data:{
-          title: this.wishMovie,
-          num: this.wishMovieId,
-        },
-        headers: {
-          Authorization: `JWT ${localStorage.getItem("jwt")}`,
-        },
-      }).then(()=>{
-        // console.log('됏니?', res.data)
-        alert(`위시리스트에 ${this.wishMovie} 이(가 추가되었습니다`)
-        this.canIwish = false
-        })
-        .catch((err) => {
-          alert('이미 추가된 영화입니다!')
+        this.user = VueJwtDecode.decode(localStorage.getItem("jwt"))
+        }
+                  axios({
+          url: `http://127.0.0.1:8000/accounts/${this.user.user_id}/wishmovie/`,
+          method: "POST",
+          data:{
+            title: this.wishMovie,
+            num: this.wishMovieId,
+          },
+          headers: {
+            Authorization: `JWT ${localStorage.getItem("jwt")}`,
+          },
+          })
+          .then(()=>{
+          // console.log('됏니?', res.data)
+          alert(`위시리스트에 ${this.wishMovie} 이(가 추가되었습니다`)
           this.canIwish = false
-          console.log(err)
-      })
-
+          })
+          .catch((err) => {
+            alert('이미 추가된 영화입니다!')
+            this.canIwish = false
+            console.log(err)
+        })
       })
       .catch((err) => {
         console.log(err)
@@ -250,7 +315,7 @@ export default {
           this.rank = this.updated_rank
           this.updated_at = res.data.updated_at
           this.revied = true;
-          console.log('넌 뭐니',this.review)
+
           
           // this.$emit('addReview', res.data)
           // this.$router.push({name: 'ReviewList' })
@@ -301,11 +366,13 @@ export default {
       this.created_at = this.$route.query.created_at;
       this.updated_at = this.$route.query.updated_at;
       this.movietitle = this.$route.query.movie_title;
+      this.reviewUser = this.$route.query.user;
+      
       // this.review = {id:this.$route.query.id, title: this.$route.query.title, content: this.$route.query.content,
       // rank: this.$route.query.rank, created_at:  this.$route.query.created_at }
       // console.log(this.review_id)
       // console.log('review다',this.review)
-    },
+    }, 
     getReviews() {
       axios({
         url: "http://127.0.0.1:8000/community/",
@@ -315,8 +382,9 @@ export default {
         },
       })
         .then((res) => {
-          // console.log(res.data)
+          console.log('리뷰', res.data)
           this.reviews = res.data;
+          console.log('이 유저는', this.user)
         })
         .catch((err) => {
           console.error(err);
@@ -363,6 +431,8 @@ export default {
     this.review_pk();
     this.getComment();
     this.getReviews();
+    this.getNowUser();
+    this.getUsername();
   },
   mounted() {
     this.getComment();

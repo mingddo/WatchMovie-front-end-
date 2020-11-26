@@ -32,11 +32,12 @@
       </svg>
       </div>
       <ul class="profile-ul" :class="{hide:wish_btn_toggle}">
-        <p class="list-item " v-for="wish in user_info.wish_movie" :key="wish.id">{{wish.title}}
-            <svg @click="deleteWish(wish)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill delete-button-locate button-animation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <span><p class="list-item " v-for="wish in user_info.wish_movie" :key="wish.id" :wish="wish" @click="movieDetail(wish)">{{wish.title}}</p></span>
+        <span>
+          <svg @click="deleteWish(wish)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill delete-button-locate button-animation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
             </svg>
-        </p>
+        </span>
       </ul>
     </div>
 
@@ -144,10 +145,20 @@ export default {
         method: 'GET',
       })
       .then((res) => {
-        console.log('보여줘', res.data.results[0])
-        this.wishMovieDetail = res.data.results[0]
-        console.log(this.wishMovieDetail)
-        console.log(`https://image.tmdb.org/t/p/w500${this.wishMovieDetail.poster_path}`)
+        let found = false
+        for (const result of res.data.results) {
+          console.log('결과는?', result)
+          if (wish.title === result.title) {
+            this.wishMovieDetail = result
+            found = true
+            console.log('찾았다!', found)
+            break
+          }
+          if (!found) {
+            this.wishMovieDetail = res.data.results[0]
+          }
+        } 
+        console.log(res.data.results)
         this.$router.push({name: "MovieDetail", query: {...this.wishMovieDetail, poster_path:`https://image.tmdb.org/t/p/w500${this.wishMovieDetail.poster_path}`}})
       })
     },

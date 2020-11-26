@@ -1,25 +1,21 @@
 <template>
   <div class="comment-box white-text">
-    <p>{{ comment.usernName }}</p>
     <table class="table">
       <tbody class="comment-table">
         <tr v-if="commented" class="row white-text">
-          <td class="col-1">
-            
+          <td class="col-2">
             <button type="button" class="btn btn-link" @click="goProfile" title="프로필페이지 가기">
               <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" class="bi bi-person-square" fill="lightgray" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                 <path fill-rule="evenodd" d="M2 15v-1c0-1 1-4 6-4s6 3 6 4v1H2zm6-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
               </svg>
             </button>
+            {{this.commentUsername}}
           </td>
           <td class="col mx-auto hor-center">
             <div class="nanum-gothic-font">{{ comment.content }}</div>
           </td>
-          <td class="col-2 hor-center">
-            <div class="nanum-gothic-font">{{ comment.updated_at }}</div>
-          </td>
-          <td class="col-1">
+          <td class="col-1" v-if="this.nowUser == comment.user">
             <div class="btn-group" title="수정 및 삭제" v-show="commented">
               <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split color-lightgray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-justify" fill="lightgray" xmlns="http://www.w3.org/2000/svg">
@@ -43,6 +39,10 @@
               </div>
             </div>
           </td>
+          <td class="col-2 hor-center">
+            <div class="nanum-gothic-font">{{ comment.updated_at }}</div>
+          </td>
+          
         </tr>
         <tr v-else class="row">
           <td class="col">댓글:</td>
@@ -64,6 +64,7 @@
 
 <script>
 import axios from 'axios'
+import VueJwtDecode from "vue-jwt-decode";
 export default {
 props : {
   comment: Object,
@@ -74,9 +75,29 @@ props : {
     return {
       update_comment:'',
       commented: true,
+      nowUser: '',
+      commentUsername: '',
     }
   },
   methods:{
+    getUsername () {
+      axios({
+        url: `http://127.0.0.1:8000/accounts/${this.comment.user}/`,
+        method: 'GET',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.commentUsername = res.data.username
+      })
+    },
+    getNowUser () {
+      this.nowUser = VueJwtDecode.decode(localStorage.getItem("jwt")).user_id
+      console.log('댓글',this.nowUser)
+      console.log('댓글유저', this.comment.user)
+    },
     goProfile () {
       this.$router.push({ name: "Profile", query:{ userId: this.comment.user}});
     },
@@ -121,6 +142,10 @@ props : {
     this.commented = false
     this.update_comment = this.comment.content
   },
+  },
+  created () {
+    this.getNowUser()
+    this.getUsername()
   },
     
 }

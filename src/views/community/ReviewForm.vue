@@ -5,8 +5,8 @@
     </div>
     <form class="review-form review-movietitle" @submit="addReview">
       <div class="movietitle-input">
-        <input v-if="this.$route.query" title="영화명" value="{this.$route.query.movietitle}" placeholder="영화명을 입력해주세요" type="text" id="movietitle" class="form-control" v-model.trim="this.$route.query.movietitle" aria-describedby="passwordHelpBlock">
-        <input v-else title="영화명" value="{this.$route.query.movietitle}" placeholder="영화명을 입력해주세요" type="text" id="movietitle" class="form-control" v-model.trim="movietitle" aria-describedby="passwordHelpBlock">
+        <input title="영화명" placeholder="영화명을 입력해주세요" type="text" id="movietitle" class="form-control" v-model.trim="movietitle" aria-describedby="passwordHelpBlock">
+        <!-- <input v-else title="영화명" placeholder="영화명을 입력해주세요" type="text" id="movietitle" class="form-control" v-model="this.$route.query.movietitle" aria-describedby="passwordHelpBlock"> -->
       </div>
       <br>
       <div class="title-input">
