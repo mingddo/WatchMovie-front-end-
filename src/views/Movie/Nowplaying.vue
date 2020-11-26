@@ -1,7 +1,7 @@
 <template>
   <span>
 
-  <carousel class="slide-frame" :perPageCustom="[ [768, 3], [1024, 7]]" 
+  <carousel class="slide-frame" :perPageCustom="[[768, 2], [1024, 5]]"  
   :navigationNextLabel="next"
   :autoplay="true" :autoplay-timeout="5000" :loop="true">
     <slide v-for="now_playing_movie in now_playing_movies" :key="now_playing_movie.id">

@@ -388,11 +388,11 @@ font-family: 'Nanum Gothic', sans-serif;
   display: none;
 }
 .movie-list {
-  /* padding: 30px 40px; */
+  padding: 30px 40px;
   text-align: center;
   color: white;
   background-color: none;
-  margin: 3rem auto;
+  margin: 4rem auto;
   z-index: 40;
   position: absolute;
   top: 250px;

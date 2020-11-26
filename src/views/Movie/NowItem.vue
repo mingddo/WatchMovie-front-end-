@@ -1,7 +1,7 @@
 <template>
   <span>
-    <div class="screen" @click="Onclick">
-      <img class="poster-img" :src="PosterURL" alt="">
+    <div class="Yscreen" @click="Onclick">
+      <img class="Yposter-img" :src="PosterURL" alt="">
     </div>
     <!-- <div>
       <span class="movie-title">{{now_playing_movie.title}}</span>
@@ -33,14 +33,5 @@ export default {
 </script>
 
 <style>
-.screen {
-  width: 98%;
-  height: 100%;
-}
-.poster-img{
-  border-radius: 5px;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
+
 </style>
