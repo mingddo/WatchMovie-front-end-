@@ -207,7 +207,7 @@ export default {
         },
       })
         .then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           this.now_playing_movies = res.data;
         })
         .catch((err) => {
@@ -223,7 +223,7 @@ export default {
         },
       })
         .then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           this.popular_movies = res.data;
         })
         .catch((err) => {
@@ -239,7 +239,7 @@ export default {
         },
       })
         .then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           this.upcomming_movies = res.data;
         })
         .catch((err) => {
