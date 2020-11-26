@@ -1,16 +1,35 @@
 <template>
   <div>
-    <h1>{{this.$route.query.title}}</h1>
-    <img :src="this.$route.query.poster_path" alt="">
-    <div>
-      <p>
-        {{this.$route.query.overview}}
-      </p>
+    <div class="container d-flex justify-content-center">
+      <div class="card review-movietitle" style="width: 40rem;">
+        <img :src="this.$route.query.poster_path" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h1 class="card-title">{{this.$route.query.title}}</h1>
+          <h5><i>{{this.$route.query.release_date}}</i></h5>
+          <div>
+            <div>
+              ⭐평점
+            </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" :style="`width: ${this.rank}%`" :aria-valuenow="this.$route.query.vote_average" aria-valuemin="0" aria-valuemax="10"></div>
+            </div>
+          </div>
+          <hr>
+          <p class="card-text">{{this.$route.query.overview}}</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
     </div>
-    <div>{{this.$route.query.release_date}}</div>
-    <div>{{this.$route.query.vote_average}}</div>
-    <div class="container" v-if="!noReview">
+    <hr>
+    <div class="container" v-if="IsReview">
+      <div class="d-flex justify-content-center">
       <h3>관련 리뷰가 {{this.reviewCount}} 개 있습니다.</h3>
+      <button class="btn btn-link" @click="goToNew" title="새글 작성">
+        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="lightgray" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+        </svg>
+      </button>
+      </div>
       <table class="table">
         <thead>
           <tr class="white-text">
@@ -37,12 +56,13 @@
         </tbody>
       </table>
       </div>
-      <div v-else>
-        <h2>아직 작성된 리뷰가 없어요!</h2>
-        <button>리뷰 작성하러 가기</button>
-        
-      </div>
-  </div>
+    <div v-else>
+      <h2>아직 작성된 리뷰가 없어요!</h2>
+      <br>
+      <button type="button" class="btn btn-secondary" @click="goToNew">리뷰 작성하러 가기</button>
+    </div>
+  
+</div>
 </template>
 
 <script>
@@ -52,11 +72,19 @@ export default {
   data () {
     return {
       reviews : [],
-      noReview: true,
+      IsReview: false,
       reviewCount: 0,
+      rank : 1,
     }
   },
   methods: {
+    goToNew () {
+      console.log(this.$route.query.title)
+      this.$router.push({name: 'ReviewForm', query:{movietitle : this.$route.query.title}})
+    },
+    calculateRank () {
+      this.rank = this.$route.query.vote_average * 10
+    },
     OnclickUser(review){
       // console.log('왜 안돼', review)
       this.$router.push({name: 'Profile', query:{ userId: review.user }})
@@ -71,16 +99,14 @@ export default {
     }).then((res)=>{
       console.log(res.data)
       for (const review of res.data) {
-        console.log(review)
         if (review.movie_title == this.$route.query.title) {
+          this.IsReview = true
           console.log('찾았따!')
-          this.noReview = false
+          this.IsReview = true
           this.reviews.push(review)
           this.reviewCount = this.reviewCount + 1
-        } else {
-          this.noReview = true
         }
-      } 
+      } console.log('총 결과', this.IsReview)
     }).catch((err)=>{
       console.error(err)
     })
@@ -88,6 +114,7 @@ export default {
   },
   created () {
     this.getReviews();
+    this.calculateRank();
   },
   computed : {
     // starRank () {
@@ -103,6 +130,10 @@ export default {
     //     return '⭐⭐⭐⭐⭐'
     //   }
     // },
+  },
+    beforeRouteLeave (to, from, next) {
+      this.IsReview = false
+      next ()
   }
 }
 </script>
