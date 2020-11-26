@@ -32,13 +32,10 @@
       </svg>
       </div>
       <ul class="profile-ul" :class="{hide:wish_btn_toggle}">
-        <p class="list-item" v-for="wish in user_info.wish_movie" :key="wish.id">
-          <span @click="movieDetail(wish)">{{wish.title}}</span>
-          <span>
-            <svg @click="deleteWish(wish)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <p class="list-item " v-for="wish in user_info.wish_movie" :key="wish.id">{{wish.title}}
+            <svg @click="deleteWish(wish)" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill delete-button-locate button-animation" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
             </svg>
-          </span>
         </p>
       </ul>
     </div>
@@ -52,8 +49,8 @@
         <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
       </svg>
       </div>
-      <ul class="profile-ul" :class="{hide:review_btn_toggle}">
-        <p class="list-item" v-for="review in user_info.reviews" :key="review.id" @click="OnClick(review)">{{review.title}}</p>
+      <ul class="profile-ul text-animation" :class="{hide:review_btn_toggle}">
+        <p class="list-item text-animation" v-for="review in user_info.reviews" :key="review.id" @click="OnClick(review)">{{review.title}}</p>
       </ul>
     </div>
 
@@ -66,8 +63,8 @@
         <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
       </svg>
       </div>
-      <ul class="profile-ul" :class="{hide:commet_btn_toggle}">
-        <p class="list-item" v-for="cmt in user_info.comment" :key="cmt.id">{{cmt.content}}</p>
+      <ul class="profile-ul text-animation" :class="{hide:commet_btn_toggle}">
+        <p class="list-item text-animation" v-for="cmt in user_info.comment" :key="cmt.id" @click="goClickedComment(cmt)">{{cmt.content}}</p>
       </ul>
     </div>
     </div>
@@ -96,8 +93,50 @@ export default {
     }
   },
   methods: {
+    goClickedComment(cmt) {
+      console.log(cmt)
+      axios({
+        url: `http://127.0.0.1:8000/community/`,
+        method: 'GET',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      }).then((res) => {
+        console.log(res.data)
+        for (const r of res.data) {
+        if (r.id == cmt.review_id) {
+          console.log('찾았따!')
+          this.$router.push({name: 'ReviewDetail', query: {...r}})
+        }
+      } console.log('총 결과', this.IsReview)
+        // this.$router.push({name: 'ReviewDetail', query: {...res.data}})
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+    },
     OnClick(review) {
-      this.$router.push({name: 'ReviewDetail', query: {...review}})
+      console.log('현재 클릭된 리뷰 정보', review)
+      axios({
+        url: `http://127.0.0.1:8000/community/`,
+        method: 'GET',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("jwt")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data)
+        for (const r of res.data) {
+        if (r.id == review.id) {
+          console.log('찾았따!')
+          this.$router.push({name: 'ReviewDetail', query: {...r}})
+        }
+      } console.log('총 결과', this.IsReview)
+        // this.$router.push({name: 'ReviewDetail', query: {...res.data}})
+      })
+      .catch((err) => {
+        console.error(err)
+      })
     },
     movieDetail (wish) {
       axios({
@@ -122,6 +161,10 @@ export default {
         .then(() => {
           console.log('클릭되었어 삭제버튼!')
           alert(`위시리스트에서 ${wish.title}이(가) 삭제되었습니다!`)
+          const targetIdx = this.user_info.wish_movie.findIndex((w) => {
+            return w.title == wish.title
+          })
+          this.user_info.wish_movie.splice(targetIdx, 1)
           // this.user_info.$forceUpdate();
         })
         .catch((err) => {
@@ -232,6 +275,9 @@ created() {
 </script>
 
 <style>
+.delete-button-locate{
+  margin-left: 4px;
+}
 .profile-title-frame{
   display: flex;
   width: 100%;
@@ -364,5 +410,13 @@ created() {
   font-size: 1.7rem;
   cursor: pointer;
   margin: 0;
+}
+.text-animation :hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.button-animation :hover {
+  cursor: pointer;
+  transform: translateX(1px);
 }
 </style>
