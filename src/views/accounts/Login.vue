@@ -55,6 +55,7 @@ export default {
         })
         .catch((err) => {
           console.log(err)
+          alert('아이디나 비밀번호가 일치하지 않습니다')
         })
     }
   }

@@ -53,6 +53,7 @@ export default {
         })
         .catch((err) => {
           console.log(err)
+          alert('이미 가입된 아이디입니다')
         })
     }
    },
