@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="searchlist">
     <h2> "<b>{{ $route.query.inputMovie }}</b>" 에 대한 검색결과가 {{ count }}건 있습니다.</h2>
     <hr>
     <!-- <div>{{$route.query}}</div> -->
@@ -36,5 +36,12 @@ export default {
 </script>
 
 <style>
-
+.searchlist{
+  width: 60%;
+  height: auto;
+  position:absolute;
+  top: 300px;
+  margin: auto;
+  align-self:center;
+}
 </style>
